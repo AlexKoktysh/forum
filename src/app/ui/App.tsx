@@ -1,5 +1,6 @@
 import type { FC } from "react";
+import { Router } from "./Router";
 
 export const App: FC = () => {
-    return <div>APP</div>;
+    return <Router />;
 };
