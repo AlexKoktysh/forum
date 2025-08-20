@@ -1,8 +1,17 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { PublicLayout } from "../layouts/publicLayout";
+import { useContext } from "react";
+import { AuthContext } from "../../shared";
 
 export const PublicRouter = () => {
     const location = useLocation();
-    const isAuth = true;
+    const { isAuth } = useContext(AuthContext);
 
-    return !isAuth ? <Outlet /> : <Navigate to={location.state?.from ?? "/"} replace />;
+    return !isAuth ? (
+        <PublicLayout>
+            <Outlet />
+        </PublicLayout>
+    ) : (
+        <Navigate to={location.state?.from ?? "/"} replace />
+    );
 };

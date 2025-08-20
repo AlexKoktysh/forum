@@ -1,0 +1,45 @@
+@forward "@styles";
+
+.mainMenu {
+    background: transparent !important;
+    border-bottom: none !important;
+    flex: 1;
+    margin: 0 32px;
+
+    :global(.ant-menu-item) {
+        color: rgba(255, 255, 255, 0.85) !important;
+        border-bottom: 2px solid transparent !important;
+        margin: 0 8px !important;
+        font-weight: var(--medium-weight);
+        transition: all 0.3s ease;
+
+        &:hover {
+            color: white !important;
+            border-bottom-color: rgba(255, 255, 255, 0.6) !important;
+            background: rgba(255, 255, 255, 0.1) !important;
+            border-radius: 6px 6px 0 0;
+        }
+
+        &:global(.ant-menu-item-selected) {
+            color: white !important;
+            border-bottom-color: white !important;
+            background: rgba(255, 255, 255, 0.15) !important;
+        }
+    }
+
+    :global(.ant-menu-item-icon) {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .mainMenu {
+        margin: 0 16px;
+
+        :global(.ant-menu-item) {
+            span {
+                display: none;
+            }
+        }
+    }
+}

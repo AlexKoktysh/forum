@@ -10,7 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/icons": "^6.0.0",
+    "@ant-design/v5-patch-for-react-19": "^1.0.3",
     "@reduxjs/toolkit": "^2.8.2",
+    "antd": "^5.27.1",
     "lottie-react": "^2.4.1",
     "path": "^0.12.7",
     "react": "^19.1.1",

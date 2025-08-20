@@ -1,5 +1,6 @@
 import type { FC } from "react";
+import { LoginForm } from "../../../feature";
 
 export const LoginPage: FC = () => {
-    return <div>LoginPage</div>;
+    return <LoginForm />;
 };
