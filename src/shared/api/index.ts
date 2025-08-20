@@ -1,0 +1,1 @@
+export { baseInstance } from "./api";
