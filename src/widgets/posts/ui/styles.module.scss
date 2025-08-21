@@ -1,0 +1,99 @@
+@forward "@styles";
+
+.postsContainer {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f0f0f0;
+
+    .title {
+        margin: 0 !important;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: var(--bold-weight);
+    }
+
+    .counter {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        border: none !important;
+        border-radius: 16px;
+        font-weight: var(--medium-weight);
+        padding: 4px 12px;
+        font-size: var(--regular-size);
+    }
+}
+
+.postsList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+    background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
+    border-radius: 16px;
+    border: 2px dashed rgba(102, 126, 234, 0.3);
+
+    .emptyIcon {
+        font-size: 48px;
+        color: #667eea;
+        margin-bottom: 16px;
+    }
+
+    .emptyTitle {
+        margin: 0 0 8px 0 !important;
+        color: #333 !important;
+    }
+
+    .emptyDescription {
+        color: #666 !important;
+        margin: 0 !important;
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .postsContainer {
+        max-width: 100%;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+
+        .title {
+            font-size: 24px !important;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .emptyState {
+        padding: 40px 16px;
+
+        .emptyIcon {
+            font-size: 36px;
+        }
+
+        .emptyTitle {
+            font-size: 18px !important;
+        }
+    }
+}

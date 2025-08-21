@@ -1,0 +1,145 @@
+@forward "@styles";
+
+.postsContainer {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.postsList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.skeletonCard {
+    border-radius: 16px !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+    border: 1px solid rgba(102, 126, 234, 0.1) !important;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+        background-size: 200% 100%;
+        animation: shimmer 3s ease-in-out infinite;
+    }
+
+    :global(.ant-card-body) {
+        padding: 24px;
+    }
+}
+
+.skeletonHeader {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 16px;
+
+    .skeletonMeta {
+        flex: 1;
+        min-width: 0;
+    }
+}
+
+.skeletonBody {
+    margin: 16px 0;
+
+    :global(.ant-skeleton-paragraph) {
+        margin-bottom: 0;
+    }
+}
+
+.skeletonFooter {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 16px;
+
+    .skeletonTags {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .postsContainer {
+        max-width: 100%;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .skeletonCard {
+        :global(.ant-card-body) {
+            padding: 16px;
+        }
+    }
+
+    .skeletonHeader {
+        gap: 12px;
+    }
+
+    .skeletonMeta {
+        :global(.ant-skeleton-input) {
+            &:first-child {
+                width: 200px !important;
+            }
+            &:last-child {
+                width: 120px !important;
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .skeletonHeader {
+        gap: 8px;
+
+        :global(.ant-skeleton-avatar) {
+            width: 36px !important;
+            height: 36px !important;
+        }
+    }
+
+    .skeletonMeta {
+        :global(.ant-skeleton-input) {
+            &:first-child {
+                width: 160px !important;
+                height: 16px !important;
+            }
+            &:last-child {
+                width: 100px !important;
+                height: 14px !important;
+            }
+        }
+    }
+}
