@@ -1,6 +1,6 @@
 import { useContext, type FC } from "react";
 import { useNavigate } from "react-router-dom";
-import { LogoutOutlined, PlusOutlined, SettingOutlined, UserOutlined } from "@ant-design/icons";
+import { LogoutOutlined, PlusOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Dropdown, Space, type MenuProps } from "antd";
 import { AuthContext } from "../../../shared";
 
@@ -15,12 +15,7 @@ export const RightSection: FC = () => {
             key: "profile",
             label: "Профиль",
             icon: <UserOutlined />,
-            onClick: () => navigate("/profile"),
-        },
-        {
-            key: "settings",
-            label: "Настройки",
-            icon: <SettingOutlined />,
+            onClick: () => navigate("/"),
         },
         {
             type: "divider",

@@ -1,1 +1,3 @@
-export { RightSection, LoginForm, Navbar } from "./ui";
+export { RightSection } from "./header";
+export { LoginForm } from "./login";
+export { Navbar } from "./navbar";
