@@ -1,0 +1,217 @@
+@forward "@styles";
+
+.postCard {
+    border-radius: 16px !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+    border: 1px solid rgba(102, 126, 234, 0.1) !important;
+    transition: all 0.3s ease !important;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+        background-size: 200% 100%;
+        animation: shimmer 3s ease-in-out infinite;
+    }
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+        border-color: rgba(102, 126, 234, 0.3) !important;
+    }
+
+    :global(.ant-card-body) {
+        padding: 24px;
+    }
+
+    :global(.ant-card-actions) {
+        background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
+        border-top: 1px solid rgba(102, 126, 234, 0.1);
+
+        > li {
+            margin: 8px 0;
+
+            > span {
+                color: #667eea;
+            }
+        }
+    }
+}
+
+.postHeader {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 16px;
+
+    .userAvatar {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        border: 2px solid rgba(102, 126, 234, 0.2);
+        flex-shrink: 0;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+    }
+
+    .postMeta {
+        flex: 1;
+        min-width: 0;
+
+        .postTitle {
+            margin: 0 0 8px 0 !important;
+            color: #333;
+            font-weight: var(--bold-weight);
+            line-height: 1.3;
+
+            &:hover {
+                color: #667eea;
+                cursor: pointer;
+            }
+        }
+
+        .postInfo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: var(--regular-size);
+            color: #666;
+
+            .postId {
+                color: #667eea;
+                font-weight: var(--medium-weight);
+            }
+
+            .separator {
+                color: #ccc;
+            }
+
+            .userId {
+                color: #666;
+                cursor: pointer;
+                transition: color 0.2s ease;
+
+                &:hover {
+                    color: #667eea;
+                }
+            }
+        }
+    }
+}
+
+.postBody {
+    margin: 16px 0 !important;
+    color: #555 !important;
+    line-height: 1.6;
+    font-size: var(--medium-size);
+
+    :global(.ant-typography-expand) {
+        color: #667eea !important;
+        font-weight: var(--medium-weight);
+    }
+}
+
+.postFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+
+    .tags {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+}
+
+.actionItem {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #667eea !important;
+    font-size: var(--regular-size);
+    font-weight: var(--medium-weight);
+    transition: all 0.2s ease;
+    cursor: pointer;
+
+    &:hover {
+        color: #764ba2 !important;
+        transform: scale(1.05);
+    }
+
+    span {
+        font-size: var(--regular-size);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .postCard {
+        :global(.ant-card-body) {
+            padding: 16px;
+        }
+    }
+
+    .postHeader {
+        gap: 12px;
+
+        .postMeta {
+            .postTitle {
+                font-size: 18px !important;
+            }
+
+            .postInfo {
+                flex-wrap: wrap;
+                gap: 6px;
+                font-size: 13px;
+            }
+        }
+    }
+
+    .postBody {
+        font-size: var(--regular-size) !important;
+    }
+
+    .actionItem {
+        flex-direction: column;
+        gap: 4px;
+        font-size: 12px;
+
+        span {
+            font-size: 12px;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .postHeader {
+        .userAvatar {
+            width: 36px !important;
+            height: 36px !important;
+            min-width: 36px !important;
+        }
+
+        .postMeta {
+            .postTitle {
+                font-size: 16px !important;
+            }
+        }
+    }
+}
