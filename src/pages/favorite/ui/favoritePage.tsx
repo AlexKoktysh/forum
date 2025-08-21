@@ -1,5 +1,6 @@
 import type { FC } from "react";
+import { PostsList } from "../../../widgets";
 
 export const FavoritePage: FC = () => {
-    return <div>FavoritePage</div>;
+    return <PostsList isFavorite={true} />;
 };

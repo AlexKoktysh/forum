@@ -5,8 +5,12 @@ import { Counter, Empty, PostCard, PostsSkeleton } from "../../../feature";
 
 import styles from "./styles.module.scss";
 
-export const PostsList: FC = () => {
-    const { isFetching, postsList } = useGetPostsList();
+type IProps = {
+    isFavorite?: boolean;
+};
+
+export const PostsList: FC<IProps> = ({ isFavorite = false }) => {
+    const { isFetching, postsList } = useGetPostsList({ isFavorite });
     const { deletePostHandler, deletingPostId } = useDeletePost();
     const { toggleFavorite, isPostInFavorites } = useFavorites();
 
@@ -24,7 +28,11 @@ export const PostsList: FC = () => {
 
     return (
         <div className={styles.postsContainer}>
-            <Counter count={postsList?.length} entityName="постов" header="Все посты" />
+            <Counter
+                count={postsList?.length}
+                entityName="постов"
+                header={!isFavorite ? "Все посты" : "Избранные посты"}
+            />
 
             <div className={styles.postsList}>
                 {postsList?.map((post: TPost) => {

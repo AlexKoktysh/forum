@@ -3,17 +3,19 @@ import { postsApi } from "../api";
 import { useAppSelector } from "../../../shared";
 import { message } from "antd";
 
-export const useGetPostsList = () => {
+type IProps = {
+    isFavorite: boolean;
+};
+
+export const useGetPostsList = ({ isFavorite }: IProps) => {
     const postsList = useAppSelector((state) => state.posts.postsList);
+    const favoriteList = useAppSelector((state) => state.posts.favoritesPosts);
 
-    const [getAllPosts, { isFetching, isError }] = postsApi.useLazyGetAllPostsQuery();
+    const { isFetching, isError } = postsApi.useGetAllPostsQuery(null);
 
-    useEffect(() => {
-        getAllPosts(null);
-    }, [getAllPosts]);
     useEffect(() => {
         isError && message.error("Ошибка при получении списка постов");
     }, [isError]);
 
-    return { isFetching, postsList };
+    return { isFetching, postsList: isFavorite ? favoriteList : postsList };
 };
