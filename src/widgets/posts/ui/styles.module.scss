@@ -10,6 +10,9 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    overflow-y: auto;
+    height: calc(100vh - 400px);
+    padding-right: 4px; /* Небольшой отступ для красоты */
 }
 
 .postWrapper {
@@ -17,7 +20,6 @@
     opacity: 1;
     transform: translateX(0);
     max-height: 1000px;
-    overflow: hidden;
 
     &.deleting {
         pointer-events: none;

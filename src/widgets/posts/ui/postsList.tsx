@@ -1,7 +1,7 @@
 import { type FC } from "react";
 import { useDeletePost, useGetPostsList, useFavorites } from "../../../entity";
 import type { TPost } from "../../../entity/posts/model";
-import { Counter, Empty, PostCard, PostsSkeleton } from "../../../feature";
+import { Counter, Empty, PostCard, PostsSkeleton, UserFilter } from "../../../feature";
 
 import styles from "./styles.module.scss";
 
@@ -10,7 +10,7 @@ type IProps = {
 };
 
 export const PostsList: FC<IProps> = ({ isFavorite = false }) => {
-    const { isFetching, postsList } = useGetPostsList({ isFavorite });
+    const { isFetching, postsList, filterUserId, setFilterUserId } = useGetPostsList({ isFavorite });
     const { deletePostHandler, deletingPostId } = useDeletePost();
     const { toggleFavorite, isPostInFavorites } = useFavorites();
 
@@ -20,6 +20,10 @@ export const PostsList: FC<IProps> = ({ isFavorite = false }) => {
 
     const handleFavoriteToggle = (post: TPost) => {
         toggleFavorite(post);
+    };
+
+    const handleUserFilterChange = (userId: number | null) => {
+        setFilterUserId(userId);
     };
 
     if (isFetching) {
@@ -33,6 +37,8 @@ export const PostsList: FC<IProps> = ({ isFavorite = false }) => {
                 entityName="постов"
                 header={!isFavorite ? "Все посты" : "Избранные посты"}
             />
+
+            <UserFilter selectedUserId={filterUserId} onUserChange={handleUserFilterChange} />
 
             <div className={styles.postsList}>
                 {postsList?.map((post: TPost) => {
@@ -48,7 +54,7 @@ export const PostsList: FC<IProps> = ({ isFavorite = false }) => {
                         >
                             <PostCard
                                 post={post}
-                                onUserClick={(userId) => console.log("Клик по пользователю:", userId)}
+                                onUserClick={(userId) => setFilterUserId(userId)}
                                 onLike={(postId) => console.log("Лайк поста:", postId)}
                                 onDislike={(postId) => console.log("Дизлайк поста:", postId)}
                                 onComment={(postId) => console.log("Комментарии к посту:", postId)}

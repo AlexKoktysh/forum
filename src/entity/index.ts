@@ -8,3 +8,4 @@ export {
     useDeletePost,
     useFavorites,
 } from "./posts";
+export { usersApi, usersActions, usersReducer, useGetUsersList, type TUser } from "./users";

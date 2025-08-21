@@ -10,6 +10,7 @@ import {
     StarFilled,
     LoadingOutlined,
 } from "@ant-design/icons";
+import { useGetUsersList } from "../../../entity";
 import type { TPost } from "../../../entity/posts/model";
 
 import styles from "./styles.module.scss";
@@ -39,6 +40,8 @@ export const PostCard: FC<PostCardProps> = ({
     isDeleting = false,
     isFavorite = false,
 }) => {
+    const { usersList } = useGetUsersList();
+
     const handleUserClick = () => {
         onUserClick?.(post.userId);
     };
@@ -110,7 +113,7 @@ export const PostCard: FC<PostCardProps> = ({
                         <span className={styles.postId}>#{post.id}</span>
                         <span className={styles.separator}>•</span>
                         <span className={styles.userId} onClick={handleUserClick}>
-                            Пользователь {post.userId}
+                            {usersList?.find(({ id }) => id === post.userId)?.username ?? post.userId}
                         </span>
                     </div>
                 </div>

@@ -1,1 +1,1 @@
-export { PostCard, PostsSkeleton } from "./ui";
+export { PostCard, PostsSkeleton, UserFilter } from "./ui";
