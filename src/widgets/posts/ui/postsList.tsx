@@ -1,20 +1,22 @@
-import { useEffect, type FC } from "react";
-import { Typography, Tag } from "antd";
-import { MessageOutlined } from "@ant-design/icons";
-import { postsApi } from "../../../entity";
+import { type FC } from "react";
+import { useDeletePost, useGetPostsList, useFavorites } from "../../../entity";
 import type { TPost } from "../../../entity/posts/model";
-import { PostCard, PostsSkeleton } from "../../../feature";
+import { Counter, Empty, PostCard, PostsSkeleton } from "../../../feature";
 
 import styles from "./styles.module.scss";
 
-const { Title, Paragraph } = Typography;
-
 export const PostsList: FC = () => {
-    const [getAllPosts, { data: postsList, isFetching }] = postsApi.useLazyGetAllPostsQuery();
+    const { isFetching, postsList } = useGetPostsList();
+    const { deletePostHandler, deletingPostId } = useDeletePost();
+    const { toggleFavorite, isPostInFavorites } = useFavorites();
 
-    useEffect(() => {
-        getAllPosts(null);
-    }, [getAllPosts]);
+    const handleDeletePost = async (postId: number) => {
+        deletePostHandler(postId);
+    };
+
+    const handleFavoriteToggle = (post: TPost) => {
+        toggleFavorite(post);
+    };
 
     if (isFetching) {
         return <PostsSkeleton count={3} />;
@@ -22,36 +24,38 @@ export const PostsList: FC = () => {
 
     return (
         <div className={styles.postsContainer}>
-            <div className={styles.header}>
-                <Title level={2} className={styles.title}>
-                    Все посты
-                </Title>
-                <Tag color="white" className={styles.counter}>
-                    {postsList?.length || 0} постов
-                </Tag>
-            </div>
+            <Counter count={postsList?.length} entityName="постов" header="Все посты" />
 
             <div className={styles.postsList}>
-                {postsList?.map((post: TPost) => (
-                    <PostCard
-                        key={post.id}
-                        post={post}
-                        onDiscuss={(postId) => console.log("Обсуждение поста:", postId)}
-                        onUserClick={(userId) => console.log("Клик по пользователю:", userId)}
-                    />
-                ))}
+                {postsList?.map((post: TPost) => {
+                    const isCurrentPostDeleting = deletingPostId === post.id;
+                    const isFavorite = isPostInFavorites(post.id);
 
-                {!postsList?.length ? (
-                    <div className={styles.emptyState}>
-                        <MessageOutlined className={styles.emptyIcon} />
-                        <Title level={3} className={styles.emptyTitle}>
-                            Пока нет постов
-                        </Title>
-                        <Paragraph className={styles.emptyDescription}>
-                            Здесь будут отображаться все посты от пользователей
-                        </Paragraph>
-                    </div>
-                ) : null}
+                    return (
+                        <div
+                            key={post.id}
+                            className={`${styles.postWrapper} ${isCurrentPostDeleting ? styles.fadingOut : ""} ${
+                                isCurrentPostDeleting ? styles.deleting : ""
+                            }`}
+                        >
+                            <PostCard
+                                post={post}
+                                onUserClick={(userId) => console.log("Клик по пользователю:", userId)}
+                                onLike={(postId) => console.log("Лайк поста:", postId)}
+                                onDislike={(postId) => console.log("Дизлайк поста:", postId)}
+                                onComment={(postId) => console.log("Комментарии к посту:", postId)}
+                                onFavorite={handleFavoriteToggle}
+                                onDelete={handleDeletePost}
+                                isDeleting={isCurrentPostDeleting}
+                                isFavorite={isFavorite}
+                            />
+                        </div>
+                    );
+                })}
+
+                {!postsList?.length && (
+                    <Empty description="Здесь будут отображаться все посты от пользователей" title="Пока нет постов" />
+                )}
             </div>
         </div>
     );

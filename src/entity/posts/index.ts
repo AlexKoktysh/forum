@@ -1,2 +1,3 @@
 export { postsApi } from "./api";
-export type { TPost } from "./model";
+export { type TPost, postsActions, postsReducer } from "./model";
+export { useGetPostsList, useDeletePost, useFavorites } from "./hooks";
