@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { NotFoundPage, LoginPage, ProfilePage, PostsPage } from "../../pages";
+import { NotFoundPage, LoginPage, ProfilePage, PostsPage, PostDetailPage, UsersPage, FavoritePage } from "../../pages";
 import { PrivateRouter, PublicRouter } from "../routers";
 
 export const routerPaths = createBrowserRouter([
@@ -8,10 +8,19 @@ export const routerPaths = createBrowserRouter([
         element: <PrivateRouter />,
         children: [
             {
-                path: "/profile",
+                path: "/",
                 element: <ProfilePage />,
             },
-            { path: "/", element: <PostsPage /> },
+            { path: "/posts", element: <PostsPage /> },
+            { path: "/posts/:id", element: <PostDetailPage /> },
+            {
+                path: "/users",
+                element: <UsersPage />,
+            },
+            {
+                path: "/favorite",
+                element: <FavoritePage />,
+            },
         ],
     },
     {
