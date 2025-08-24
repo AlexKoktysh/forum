@@ -24,11 +24,9 @@ const postsSlice = createSlice({
             const isAlreadyFavorite = state.favoritesPosts.some((favPost) => favPost.id === post.id);
 
             if (isAlreadyFavorite) {
-                // Удаляем из избранного
                 state.favoritesPosts = state.favoritesPosts.filter((favPost) => favPost.id !== post.id);
             } else {
-                // Добавляем в избранное
-                state.favoritesPosts.push(post);
+                state.favoritesPosts = [...state.favoritesPosts, post];
             }
         },
     },

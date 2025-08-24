@@ -1,11 +1,21 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit/react";
 import { baseInstance } from "../../api";
-import { authActions, authReducer, postsActions, postsReducer, usersActions, usersReducer } from "../../../entity";
+import {
+    authActions,
+    authReducer,
+    likeActions,
+    likeReducer,
+    postsActions,
+    postsReducer,
+    usersActions,
+    usersReducer,
+} from "../../../entity";
 
 export const actions = {
     ...authActions,
     ...postsActions,
     ...usersActions,
+    ...likeActions,
 };
 
 export const rootReducer = combineReducers({
@@ -13,6 +23,7 @@ export const rootReducer = combineReducers({
     auth: authReducer,
     posts: postsReducer,
     users: usersReducer,
+    likes: likeReducer,
 });
 
 export const setupStore = () => {

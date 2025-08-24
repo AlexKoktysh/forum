@@ -1,0 +1,18 @@
+@forward "@styles";
+
+.deleteButton {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.2s ease;
+    border: none !important;
+    box-shadow: none !important;
+    color: #667eea;
+
+    &:hover {
+        color: #ff4757 !important;
+        background: rgba(255, 71, 87, 0.1) !important;
+        border-color: transparent !important;
+        box-shadow: none !important;
+    }
+}

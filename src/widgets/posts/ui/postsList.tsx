@@ -1,4 +1,5 @@
 import { type FC } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDeletePost, useGetPostsList, useFavorites } from "../../../entity";
 import type { TPost } from "../../../entity/posts/model";
 import { Counter, Empty, PostCard, PostsSkeleton, UserFilter } from "../../../feature";
@@ -10,9 +11,14 @@ type IProps = {
 };
 
 export const PostsList: FC<IProps> = ({ isFavorite = false }) => {
+    const navigate = useNavigate();
     const { isFetching, postsList, filterUserId, setFilterUserId } = useGetPostsList({ isFavorite });
     const { deletePostHandler, deletingPostId } = useDeletePost();
     const { toggleFavorite, isPostInFavorites } = useFavorites();
+
+    const handlePostClick = (postId: number) => {
+        navigate(`/posts/${postId}`);
+    };
 
     const handleDeletePost = async (postId: number) => {
         deletePostHandler(postId);
@@ -54,12 +60,10 @@ export const PostsList: FC<IProps> = ({ isFavorite = false }) => {
                         >
                             <PostCard
                                 post={post}
+                                onPostClick={handlePostClick}
                                 onUserClick={(userId) => setFilterUserId(userId)}
-                                onLike={(postId) => console.log("Лайк поста:", postId)}
-                                onDislike={(postId) => console.log("Дизлайк поста:", postId)}
                                 onComment={(postId) => console.log("Комментарии к посту:", postId)}
                                 onFavorite={handleFavoriteToggle}
-                                onDelete={handleDeletePost}
                                 isDeleting={isCurrentPostDeleting}
                                 isFavorite={isFavorite}
                             />

@@ -1,0 +1,265 @@
+@forward "@styles";
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 24px;
+    height: calc(100vh - 176px);
+    overflow-y: auto;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.postCard {
+    margin-bottom: 24px;
+    border-radius: 16px;
+    box-shadow: 0 4px 25px rgba(102, 126, 234, 0.08), 0 2px 12px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(102, 126, 234, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+
+    &:hover {
+        box-shadow: 0 8px 35px rgba(102, 126, 234, 0.12), 0 4px 20px rgba(0, 0, 0, 0.06);
+        transform: translateY(-2px);
+    }
+
+    :global(.ant-card-body) {
+        padding: 32px;
+    }
+}
+
+.postHeader {
+    .postTitle {
+        margin-bottom: 16px !important;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-size: 2.5rem !important;
+        font-weight: 700 !important;
+        line-height: 1.2 !important;
+    }
+}
+
+.authorSection {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.03) 0%, rgba(118, 75, 162, 0.03) 100%);
+    border-radius: 12px;
+    border: 1px solid rgba(102, 126, 234, 0.1);
+
+    .authorAvatar {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: 3px solid rgba(255, 255, 255, 0.9);
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+    }
+
+    .authorInfo {
+        flex: 1;
+
+        .authorName {
+            margin-bottom: 4px !important;
+            color: #1e293b;
+        }
+
+        .authorRole {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+    }
+}
+
+.postContent {
+    .postBody {
+        font-size: 16px !important;
+        line-height: 1.8 !important;
+        color: #334155 !important;
+        margin-bottom: 0 !important;
+
+        &::first-letter {
+            font-size: 3em;
+            font-weight: 700;
+            float: left;
+            line-height: 1;
+            margin: 0 8px 0 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    }
+}
+
+.postFooter {
+    .actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+
+        .actionButton {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+
+            &:hover {
+                background: rgba(102, 126, 234, 0.1);
+                border-color: rgba(102, 126, 234, 0.2);
+                color: #667eea;
+                transform: translateY(-1px);
+            }
+
+            &.favoriteActive {
+                background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 152, 0, 0.1) 100%);
+                color: #ff9800;
+                border-color: rgba(255, 152, 0, 0.2);
+
+                &:hover {
+                    background: linear-gradient(135deg, rgba(255, 193, 7, 0.2) 0%, rgba(255, 152, 0, 0.2) 100%);
+                }
+            }
+        }
+    }
+}
+
+.commentsCard {
+    border-radius: 16px;
+    box-shadow: 0 4px 25px rgba(102, 126, 234, 0.08), 0 2px 12px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(102, 126, 234, 0.1);
+
+    :global(.ant-card-head) {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+
+        :global(.ant-card-head-title) {
+            color: #667eea;
+            font-weight: 600;
+        }
+    }
+
+    .commentsPlaceholder {
+        padding: 40px;
+        text-align: center;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.02) 0%, rgba(118, 75, 162, 0.02) 100%);
+        border-radius: 8px;
+        border: 1px dashed rgba(102, 126, 234, 0.2);
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 16px;
+        max-width: 100%;
+        height: calc(100vh - 160px);
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .postCard {
+        :global(.ant-card-body) {
+            padding: 20px;
+        }
+    }
+
+    .postHeader {
+        .postTitle {
+            font-size: 2rem !important;
+        }
+    }
+
+    .authorSection {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: center;
+
+        .authorInfo {
+            width: 100%;
+            text-align: center;
+        }
+
+        .followButton {
+            width: 100%;
+        }
+    }
+
+    .postFooter {
+        .actions {
+            justify-content: center;
+
+            .actionButton {
+                flex: 1;
+                min-width: 120px;
+                justify-content: center;
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 12px;
+        height: calc(100vh - 154px);
+    }
+
+    .postCard {
+        :global(.ant-card-body) {
+            padding: 16px;
+        }
+    }
+
+    .postHeader {
+        .postTitle {
+            font-size: 1.5rem !important;
+        }
+    }
+
+    .postFooter {
+        .actions {
+            flex-direction: column;
+
+            .actionButton {
+                width: 100%;
+            }
+        }
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.container > * {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.postCard {
+    animation-delay: 0.1s;
+}
+
+.commentsCard {
+    animation-delay: 0.2s;
+}

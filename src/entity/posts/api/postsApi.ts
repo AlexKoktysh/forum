@@ -11,6 +11,12 @@ export const postsApi = baseInstance.enhanceEndpoints({ addTagTypes: ["posts"] }
             }),
             providesTags: ["posts"],
         }),
+        getPostById: build.query<TPost, { postId: number }>({
+            query: ({ postId }) => ({
+                url: `${BASE_URL}/${postId}`,
+            }),
+            providesTags: ["posts"],
+        }),
         deletePost: build.mutation<null, { postId: number }>({
             query: ({ postId }) => ({
                 url: `${BASE_URL}/${postId}`,

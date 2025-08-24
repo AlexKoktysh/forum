@@ -22,7 +22,7 @@ export const useGetPostsList = ({ isFavorite = false }: IProps = {}) => {
 
     const filteredPostsList = useMemo(() => {
         if (isFavorite) {
-            return basePostsList.filter((post) => post.userId === filterUserId);
+            return basePostsList.filter((post) => !filterUserId || post.userId === filterUserId);
         }
         return basePostsList;
     }, [basePostsList, filterUserId, isFavorite]);

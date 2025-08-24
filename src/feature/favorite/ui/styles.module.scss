@@ -1,0 +1,53 @@
+@forward "@styles";
+
+.favoriteButton {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.2s ease;
+    border: none !important;
+    box-shadow: none !important;
+    color: #667eea;
+
+    &:hover {
+        color: #ffa502 !important;
+        background: rgba(255, 165, 2, 0.1) !important;
+        border-color: transparent !important;
+        box-shadow: none !important;
+    }
+
+    &.favorite {
+        color: #ffa502 !important;
+        background: rgba(255, 165, 2, 0.1) !important;
+
+        .favoriteIcon {
+            color: #ffa502 !important;
+            animation: heartBeat 0.6s ease-in-out;
+        }
+
+        &:hover {
+            background: rgba(255, 165, 2, 0.15) !important;
+        }
+    }
+}
+
+@keyframes heartBeat {
+    0% {
+        transform: scale(1);
+    }
+    20% {
+        transform: scale(1.2);
+    }
+    40% {
+        transform: scale(1);
+    }
+    60% {
+        transform: scale(1.1);
+    }
+    80% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
