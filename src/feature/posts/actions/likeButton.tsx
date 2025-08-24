@@ -3,7 +3,7 @@ import { Button } from "antd";
 import { HeartOutlined, HeartFilled, DislikeOutlined, DislikeFilled } from "@ant-design/icons";
 import { useActions, useAppSelector } from "../../../shared";
 
-import styles from "./styles.module.scss";
+import styles from "./likeStyles.module.scss";
 
 interface LikeButtonProps {
     postId: number;

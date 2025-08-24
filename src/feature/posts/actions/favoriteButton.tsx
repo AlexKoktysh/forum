@@ -3,7 +3,7 @@ import { useMemo, type FC } from "react";
 import { useFavorites, type TPost } from "../../../entity";
 import { StarFilled, StarOutlined } from "@ant-design/icons";
 
-import styles from "./styles.module.scss";
+import styles from "./favoriteStyles.module.scss";
 
 interface IProps {
     post: TPost;

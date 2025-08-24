@@ -1,14 +1,13 @@
 import { type FC } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Typography, Card, Avatar, Button, Divider, Skeleton, Alert } from "antd";
-import { UserOutlined, MessageOutlined } from "@ant-design/icons";
+import { Typography, Card, Button, Divider, Skeleton, Alert } from "antd";
 import { postsApi } from "../../../entity/posts/api/postsApi";
-import { useGetUsersList } from "../../../entity";
-import { CommentButton, FavoriteButton, LikeButton } from "../../../feature";
+import { CommentsList, FavoriteButton, LikeButton } from "../../../feature";
+import { AuthorInfo } from "../../../feature";
 
 import styles from "./styles.module.scss";
 
-const { Title, Paragraph, Text } = Typography;
+const { Paragraph } = Typography;
 
 export const PostDetailPage: FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -16,16 +15,9 @@ export const PostDetailPage: FC = () => {
     const postId = Number(id);
 
     const { data: post, isLoading, error } = postsApi.useGetPostByIdQuery({ postId });
-    const { usersList } = useGetUsersList();
-
-    const user = usersList?.find((u) => u.id === post?.userId);
 
     const handleBack = () => {
         navigate(-1);
-    };
-
-    const handleComment = () => {
-        console.log("Комментарии к посту:", postId);
     };
 
     if (isLoading) {
@@ -63,25 +55,13 @@ export const PostDetailPage: FC = () => {
     return (
         <div className={styles.container}>
             <Card className={styles.postCard}>
-                <div className={styles.postHeader}>
-                    <Title level={1} className={styles.postTitle}>
-                        {post.title}
-                    </Title>
-                </div>
-
-                <Divider />
-
-                <div className={styles.authorSection}>
-                    <Avatar size={64} icon={<UserOutlined />} className={styles.authorAvatar} />
-                    <div className={styles.authorInfo}>
-                        <Title level={4} className={styles.authorName}>
-                            {user?.username || `Пользователь ${post.userId}`}
-                        </Title>
-                        <Text type="secondary" className={styles.authorRole}>
-                            Автор поста
-                        </Text>
-                    </div>
-                </div>
+                <AuthorInfo
+                    post={post}
+                    variant="detail"
+                    titleLevel={1}
+                    avatarSize={64}
+                    className={styles.authorSection}
+                />
 
                 <Divider />
 
@@ -95,17 +75,12 @@ export const PostDetailPage: FC = () => {
                     <div className={styles.actions}>
                         <LikeButton postId={postId} />
                         <LikeButton postId={postId} isDislikeButton={true} />
-                        <CommentButton postId={postId} />
                         <FavoriteButton post={post} />
                     </div>
                 </div>
             </Card>
 
-            <Card className={styles.commentsCard} title="Комментарии (8)">
-                <div className={styles.commentsPlaceholder}>
-                    <Text type="secondary">Здесь будет раздел комментариев</Text>
-                </div>
-            </Card>
+            <CommentsList postId={postId} />
         </div>
     );
 };

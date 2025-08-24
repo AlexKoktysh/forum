@@ -1,0 +1,206 @@
+@forward "@styles";
+
+.commentsModal {
+    // Предотвращаем всплытие событий
+    pointer-events: auto;
+
+    :global(.ant-modal-header) {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+        border-radius: 16px 16px 0 0;
+
+        :global(.ant-modal-title) {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 18px;
+        }
+    }
+
+    :global(.ant-modal-content) {
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 8px 40px rgba(102, 126, 234, 0.15), 0 4px 20px rgba(0, 0, 0, 0.08);
+        pointer-events: auto;
+    }
+
+    :global(.ant-modal-body) {
+        padding: 0;
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+
+    :global(.ant-modal-close) {
+        color: #667eea;
+
+        &:hover {
+            color: #5a67d8;
+        }
+    }
+}
+
+.modalContent {
+    // Убеждаемся, что события не всплывают
+    pointer-events: auto;
+
+    .postInfo {
+        padding: 24px;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.02) 0%, rgba(118, 75, 162, 0.02) 100%);
+        border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+
+        .postHeader {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+
+            .userAvatar {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                border: 2px solid rgba(255, 255, 255, 0.9);
+                box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+            }
+
+            .postMeta {
+                flex: 1;
+
+                .postTitle {
+                    margin-bottom: 4px !important;
+                    color: #1e293b;
+                    font-size: 16px !important;
+                    line-height: 1.3 !important;
+                }
+
+                .authorInfo {
+                    font-size: 13px;
+                    color: #64748b;
+                }
+            }
+        }
+
+        .postBody {
+            padding-left: 56px;
+
+            .postText {
+                color: #475569;
+                line-height: 1.6;
+                font-size: 14px;
+            }
+        }
+    }
+
+    .commentsSection {
+        padding: 24px;
+
+        // Переопределяем стили для CommentsList в модальном окне
+        :global(.ant-card) {
+            border: none;
+            box-shadow: none;
+            background: transparent;
+
+            :global(.ant-card-head) {
+                background: transparent;
+                border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+                padding: 0 0 16px 0;
+
+                :global(.ant-card-head-title) {
+                    color: #667eea;
+                    font-weight: 600;
+                    font-size: 16px;
+                }
+            }
+
+            :global(.ant-card-body) {
+                padding: 20px 0 0 0;
+            }
+        }
+    }
+}
+
+// Адаптивные стили
+@media (max-width: 768px) {
+    .commentsModal {
+        :global(.ant-modal-content) {
+            margin: 16px;
+            max-width: calc(100vw - 32px);
+        }
+
+        :global(.ant-modal-body) {
+            max-height: 75vh;
+        }
+    }
+
+    .modalContent {
+        .postInfo {
+            padding: 16px;
+
+            .postHeader {
+                gap: 12px;
+                margin-bottom: 12px;
+
+                .postMeta {
+                    .postTitle {
+                        font-size: 15px !important;
+                    }
+
+                    .authorInfo {
+                        font-size: 12px;
+                    }
+                }
+            }
+
+            .postBody {
+                padding-left: 44px;
+
+                .postText {
+                    font-size: 13px;
+                }
+            }
+        }
+
+        .commentsSection {
+            padding: 16px;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .commentsModal {
+        :global(.ant-modal-content) {
+            margin: 8px;
+            max-width: calc(100vw - 16px);
+        }
+
+        :global(.ant-modal-body) {
+            max-height: 80vh;
+        }
+    }
+
+    .modalContent {
+        .postInfo {
+            padding: 12px;
+
+            .postHeader {
+                flex-direction: column;
+                align-items: flex-start;
+                text-align: center;
+
+                .userAvatar {
+                    align-self: center;
+                }
+
+                .postMeta {
+                    width: 100%;
+                    text-align: center;
+                }
+            }
+
+            .postBody {
+                padding-left: 0;
+                margin-top: 12px;
+            }
+        }
+
+        .commentsSection {
+            padding: 12px;
+        }
+    }
+}

@@ -2,7 +2,7 @@ import { Button } from "antd";
 import { useMemo, type FC } from "react";
 import { useDeletePost } from "../../../entity";
 
-import styles from "./styles.module.scss";
+import styles from "./deleteStyles.module.scss";
 import { DeleteOutlined, LoadingOutlined } from "@ant-design/icons";
 
 interface IProps {
