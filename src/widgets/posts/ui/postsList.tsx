@@ -52,7 +52,6 @@ export const PostsList: FC<IProps> = ({ isFavorite = false }) => {
                                 post={post}
                                 onPostClick={handlePostClick}
                                 onUserClick={(userId) => setFilterUserId(userId)}
-                                onComment={(postId) => console.log("Комментарии к посту:", postId)}
                             />
                         </div>
                     );

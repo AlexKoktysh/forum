@@ -4,7 +4,7 @@ import { Typography, Card, Avatar, Button, Divider, Skeleton, Alert } from "antd
 import { UserOutlined, MessageOutlined } from "@ant-design/icons";
 import { postsApi } from "../../../entity/posts/api/postsApi";
 import { useGetUsersList } from "../../../entity";
-import { FavoriteButton, LikeButton } from "../../../feature";
+import { CommentButton, FavoriteButton, LikeButton } from "../../../feature";
 
 import styles from "./styles.module.scss";
 
@@ -95,14 +95,7 @@ export const PostDetailPage: FC = () => {
                     <div className={styles.actions}>
                         <LikeButton postId={postId} />
                         <LikeButton postId={postId} isDislikeButton={true} />
-                        <Button
-                            type="text"
-                            icon={<MessageOutlined />}
-                            className={styles.actionButton}
-                            onClick={handleComment}
-                        >
-                            8 комментариев
-                        </Button>
+                        <CommentButton postId={postId} />
                         <FavoriteButton post={post} />
                     </div>
                 </div>

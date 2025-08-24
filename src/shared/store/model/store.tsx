@@ -3,6 +3,8 @@ import { baseInstance } from "../../api";
 import {
     authActions,
     authReducer,
+    commentActions,
+    commentReducer,
     likeActions,
     likeReducer,
     postsActions,
@@ -16,6 +18,7 @@ export const actions = {
     ...postsActions,
     ...usersActions,
     ...likeActions,
+    ...commentActions,
 };
 
 export const rootReducer = combineReducers({
@@ -24,6 +27,7 @@ export const rootReducer = combineReducers({
     posts: postsReducer,
     users: usersReducer,
     likes: likeReducer,
+    comments: commentReducer,
 });
 
 export const setupStore = () => {

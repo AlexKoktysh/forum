@@ -1,11 +1,12 @@
 import { type FC } from "react";
 import { Typography, Card, Tag, Avatar } from "antd";
-import { UserOutlined, MessageOutlined } from "@ant-design/icons";
+import { UserOutlined } from "@ant-design/icons";
 import { useGetUsersList } from "../../../entity";
 import type { TPost } from "../../../entity/posts/model";
 import { LikeButton } from "../../like";
 import { FavoriteButton } from "../../favorite";
 import { DeleteButton } from "../../delete";
+import { CommentButton } from "../../comment";
 
 import styles from "./styles.module.scss";
 
@@ -15,10 +16,9 @@ interface PostCardProps {
     post: TPost;
     onPostClick?: (postId: number) => void;
     onUserClick?: (userId: number) => void;
-    onComment?: (postId: number) => void;
 }
 
-export const PostCard: FC<PostCardProps> = ({ post, onPostClick, onUserClick, onComment }) => {
+export const PostCard: FC<PostCardProps> = ({ post, onPostClick, onUserClick }) => {
     const { usersList } = useGetUsersList();
 
     const handlePostClick = () => {
@@ -30,11 +30,6 @@ export const PostCard: FC<PostCardProps> = ({ post, onPostClick, onUserClick, on
         onUserClick?.(post.userId);
     };
 
-    const handleCommentClick = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        onComment?.(post.id);
-    };
-
     return (
         <Card
             className={styles.postCard}
@@ -43,10 +38,7 @@ export const PostCard: FC<PostCardProps> = ({ post, onPostClick, onUserClick, on
             actions={[
                 <LikeButton postId={post.id} />,
                 <LikeButton postId={post.id} isDislikeButton={true} />,
-                <div key="comments" className={styles.actionItem} data-action="comment" onClick={handleCommentClick}>
-                    <MessageOutlined />
-                    <span>Комментарии</span>
-                </div>,
+                <CommentButton postId={post.id} />,
                 <FavoriteButton post={post} />,
                 <DeleteButton postId={post.id} />,
             ]}

@@ -1,0 +1,33 @@
+@forward "@styles";
+
+.commentButton {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.2s ease;
+    border: none !important;
+    box-shadow: none !important;
+    color: #667eea;
+
+    &:hover {
+        color: #3742fa !important;
+        background: rgba(55, 66, 250, 0.1) !important;
+        border-color: transparent !important;
+        box-shadow: none !important;
+    }
+
+    &:active {
+        color: #2f3542 !important;
+        background: rgba(55, 66, 250, 0.15) !important;
+        transform: scale(0.98);
+    }
+
+    // Стили для иконки и текста
+    .anticon {
+        transition: color 0.2s ease;
+    }
+
+    span {
+        transition: color 0.2s ease;
+    }
+}

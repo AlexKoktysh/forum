@@ -7,3 +7,4 @@ export { Empty } from "./empty";
 export { LikeButton } from "./like";
 export { FavoriteButton } from "./favorite";
 export { DeleteButton } from "./delete";
+export { CommentButton } from "./comment";
