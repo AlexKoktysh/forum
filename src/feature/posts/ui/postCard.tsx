@@ -1,7 +1,7 @@
 import { type FC } from "react";
 import { Typography, Card, Tag, Avatar } from "antd";
-import { UserOutlined, MessageOutlined, DeleteOutlined, LoadingOutlined } from "@ant-design/icons";
-import { useDeletePost, useGetUsersList } from "../../../entity";
+import { UserOutlined, MessageOutlined } from "@ant-design/icons";
+import { useGetUsersList } from "../../../entity";
 import type { TPost } from "../../../entity/posts/model";
 import { LikeButton } from "../../like";
 import { FavoriteButton } from "../../favorite";
@@ -16,22 +16,10 @@ interface PostCardProps {
     onPostClick?: (postId: number) => void;
     onUserClick?: (userId: number) => void;
     onComment?: (postId: number) => void;
-    onFavorite?: (post: TPost) => void;
-    isDeleting?: boolean;
-    isFavorite?: boolean;
 }
 
-export const PostCard: FC<PostCardProps> = ({
-    post,
-    onPostClick,
-    onUserClick,
-    onComment,
-    onFavorite,
-    isDeleting = false,
-    isFavorite = false,
-}) => {
+export const PostCard: FC<PostCardProps> = ({ post, onPostClick, onUserClick, onComment }) => {
     const { usersList } = useGetUsersList();
-    const { deletePostHandler } = useDeletePost();
 
     const handlePostClick = () => {
         onPostClick?.(post.id);
@@ -45,16 +33,6 @@ export const PostCard: FC<PostCardProps> = ({
     const handleCommentClick = (e: React.MouseEvent) => {
         e.stopPropagation();
         onComment?.(post.id);
-    };
-
-    const handleDeleteClick = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        deletePostHandler(post.id);
-    };
-
-    const handleFavoriteClick = (e: React.MouseEvent) => {
-        e.stopPropagation();
-        onFavorite?.(post);
     };
 
     return (

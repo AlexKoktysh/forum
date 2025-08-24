@@ -1,9 +1,9 @@
 import { type FC } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Typography, Card, Avatar, Button, Divider, Skeleton, Alert } from "antd";
-import { UserOutlined, MessageOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
+import { UserOutlined, MessageOutlined } from "@ant-design/icons";
 import { postsApi } from "../../../entity/posts/api/postsApi";
-import { useGetUsersList, useFavorites } from "../../../entity";
+import { useGetUsersList } from "../../../entity";
 import { FavoriteButton, LikeButton } from "../../../feature";
 
 import styles from "./styles.module.scss";
@@ -17,19 +17,11 @@ export const PostDetailPage: FC = () => {
 
     const { data: post, isLoading, error } = postsApi.useGetPostByIdQuery({ postId });
     const { usersList } = useGetUsersList();
-    const { toggleFavorite, isPostInFavorites } = useFavorites();
 
     const user = usersList?.find((u) => u.id === post?.userId);
-    const isFavorite = post ? isPostInFavorites(post.id) : false;
 
     const handleBack = () => {
         navigate(-1);
-    };
-
-    const handleFavoriteToggle = () => {
-        if (post) {
-            toggleFavorite(post);
-        }
     };
 
     const handleComment = () => {

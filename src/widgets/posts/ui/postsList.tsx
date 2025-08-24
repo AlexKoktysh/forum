@@ -1,6 +1,6 @@
 import { type FC } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDeletePost, useGetPostsList, useFavorites } from "../../../entity";
+import { useDeletePost, useGetPostsList } from "../../../entity";
 import type { TPost } from "../../../entity/posts/model";
 import { Counter, Empty, PostCard, PostsSkeleton, UserFilter } from "../../../feature";
 
@@ -13,19 +13,10 @@ type IProps = {
 export const PostsList: FC<IProps> = ({ isFavorite = false }) => {
     const navigate = useNavigate();
     const { isFetching, postsList, filterUserId, setFilterUserId } = useGetPostsList({ isFavorite });
-    const { deletePostHandler, deletingPostId } = useDeletePost();
-    const { toggleFavorite, isPostInFavorites } = useFavorites();
+    const { deletingPostId } = useDeletePost();
 
     const handlePostClick = (postId: number) => {
         navigate(`/posts/${postId}`);
-    };
-
-    const handleDeletePost = async (postId: number) => {
-        deletePostHandler(postId);
-    };
-
-    const handleFavoriteToggle = (post: TPost) => {
-        toggleFavorite(post);
     };
 
     const handleUserFilterChange = (userId: number | null) => {
@@ -49,7 +40,6 @@ export const PostsList: FC<IProps> = ({ isFavorite = false }) => {
             <div className={styles.postsList}>
                 {postsList?.map((post: TPost) => {
                     const isCurrentPostDeleting = deletingPostId === post.id;
-                    const isFavorite = isPostInFavorites(post.id);
 
                     return (
                         <div
@@ -63,9 +53,6 @@ export const PostsList: FC<IProps> = ({ isFavorite = false }) => {
                                 onPostClick={handlePostClick}
                                 onUserClick={(userId) => setFilterUserId(userId)}
                                 onComment={(postId) => console.log("Комментарии к посту:", postId)}
-                                onFavorite={handleFavoriteToggle}
-                                isDeleting={isCurrentPostDeleting}
-                                isFavorite={isFavorite}
                             />
                         </div>
                     );
