@@ -27,7 +27,7 @@ export const PostCard: FC<PostCardProps> = ({ post, onPostClick, onUserClick }) 
             actions={[
                 <LikeButton postId={post.id} />,
                 <LikeButton postId={post.id} isDislikeButton={true} />,
-                <CommentButton postId={post.id} post={post} />,
+                <CommentButton postId={post.id} />,
                 <FavoriteButton post={post} />,
                 <DeleteButton postId={post.id} />,
             ]}

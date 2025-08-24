@@ -1,1 +1,1 @@
-export type { TAuthDto } from "./types";
+export type { TAuthDto, WithId } from "./types";

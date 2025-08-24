@@ -1,2 +1,2 @@
-export { PostCard, PostsSkeleton, UserFilter } from "./ui";
+export { PostCard, PostsSkeleton, UserFilter, CreateModal } from "./ui";
 export { DeleteButton, FavoriteButton, LikeButton } from "./actions";

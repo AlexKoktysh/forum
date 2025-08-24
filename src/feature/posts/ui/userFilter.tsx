@@ -29,8 +29,6 @@ export const UserFilter: FC<UserFilterProps> = ({ selectedUserId, onUserChange }
             <Select
                 className={styles.userSelect}
                 placeholder="Выберите автора"
-                allowClear
-                clearIcon={<span>✕</span>}
                 value={selectedUserId}
                 onChange={handleChange}
                 options={[
@@ -38,6 +36,7 @@ export const UserFilter: FC<UserFilterProps> = ({ selectedUserId, onUserChange }
                     ...(usersList ?? []).map(({ username, id }) => ({ label: username, value: id })),
                 ]}
                 showSearch
+                virtual={false}
                 filterOption={(input, option) => option?.label?.toLowerCase().includes(input.toLowerCase()) ?? false}
                 size="middle"
                 suffixIcon={<UserOutlined />}

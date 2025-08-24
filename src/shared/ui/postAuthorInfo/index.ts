@@ -1,1 +1,0 @@
-export { PostAuthorInfo } from "./postAuthorInfo";

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { TUser } from "./types";
 import { usersApi } from "../api";
 
@@ -11,10 +11,15 @@ const initialState: {
 const usersSlice = createSlice({
     name: "users",
     initialState,
-    reducers: {},
+    reducers: {
+        setDefaultUser(state, action: PayloadAction<TUser>) {
+            state.usersList = [...state.usersList, action.payload];
+        },
+    },
     extraReducers(builder) {
         builder.addMatcher(usersApi.endpoints.getAllUsers.matchFulfilled, (state, { payload }) => {
-            state.usersList = payload;
+            const defaultUser = state.usersList.find(({ id }) => id === 11) as TUser;
+            state.usersList = [defaultUser, ...payload];
         });
     },
 });
