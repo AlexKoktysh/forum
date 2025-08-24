@@ -1,4 +1,5 @@
-// Базовые стили для компонента PostAuthorInfo
+@forward "@styles";
+
 .postAuthorInfo {
     display: flex;
     align-items: flex-start;
@@ -49,7 +50,6 @@
     margin-top: 2px !important;
 }
 
-// Вариант для карточки поста
 .cardVariant {
     align-items: center;
 }
@@ -72,14 +72,9 @@
     font-size: 13px;
 }
 
-// Вариант для детальной страницы поста
 .detailVariant {
     align-items: flex-start;
     padding: 16px 0;
-}
-
-.detailAvatar {
-    // Дополнительные стили для большого аватара
 }
 
 .detailTitle {
@@ -94,14 +89,9 @@
     gap: 4px;
 }
 
-// Вариант для модального окна
 .modalVariant {
     align-items: center;
     padding: 12px 0;
-}
-
-.modalAvatar {
-    // Стили для аватара в модалке
 }
 
 .modalTitle {
@@ -113,4 +103,279 @@
 .modalUserInfo {
     font-size: 13px;
     color: rgba(0, 0, 0, 0.65);
+}
+
+.userList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 24px;
+    padding: 20px 0;
+}
+
+.userCard {
+    border-radius: 16px !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+    border: 1px solid rgba(102, 126, 234, 0.1) !important;
+    transition: all 0.3s ease !important;
+    position: relative;
+    overflow: hidden;
+    height: fit-content;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+        background-size: 200% 100%;
+        animation: shimmer 3s ease-in-out infinite;
+    }
+
+    &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 25px -3px rgba(0, 0, 0, 0.12), 0 8px 16px -4px rgba(0, 0, 0, 0.08) !important;
+        border-color: rgba(102, 126, 234, 0.3) !important;
+    }
+
+    :global(.ant-card-body) {
+        padding: 24px !important;
+    }
+}
+
+.userHeader {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.userAvatar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    border: 3px solid rgba(102, 126, 234, 0.2) !important;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+}
+
+.userInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+.userName {
+    margin: 0 0 4px 0 !important;
+    color: #333 !important;
+    font-weight: var(--bold-weight) !important;
+    font-size: 18px !important;
+    line-height: 1.3;
+}
+
+.userStats {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding: 16px;
+    background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
+    border-radius: 12px;
+    border: 1px solid rgba(102, 126, 234, 0.08);
+}
+
+.statItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.statIcon {
+    color: #667eea;
+    font-size: 16px;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.statContent {
+    flex: 1;
+    min-width: 0;
+}
+
+.statLabel {
+    display: block;
+    font-size: 12px !important;
+    color: #666 !important;
+    font-weight: var(--medium-weight);
+    margin-bottom: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.statValue {
+    display: block;
+    font-size: var(--regular-size) !important;
+    color: #333 !important;
+    font-weight: var(--medium-weight);
+    word-break: break-word;
+}
+
+.userActions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.primaryAction {
+    flex: 1;
+    min-width: 140px;
+    height: 36px !important;
+    border-radius: 8px !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    border: none !important;
+    font-weight: var(--medium-weight) !important;
+    box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3) !important;
+    transition: all 0.3s ease !important;
+
+    &:hover {
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 8px rgba(102, 126, 234, 0.4) !important;
+        background: linear-gradient(135deg, #7c8df0 0%, #8a5bc2 100%) !important;
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.3) !important;
+    }
+}
+
+.userNameSkeleton {
+    border-radius: 6px !important;
+}
+
+.userIdSkeleton {
+    border-radius: 4px !important;
+}
+
+.statIconSkeleton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+}
+
+.statLabelSkeleton {
+    border-radius: 4px !important;
+}
+
+.statValueSkeleton {
+    border-radius: 4px !important;
+}
+
+.primaryActionSkeleton {
+    border-radius: 8px !important;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .userList {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 16px 0;
+    }
+
+    .userCard {
+        :global(.ant-card-body) {
+            padding: 20px !important;
+        }
+    }
+
+    .userHeader {
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+
+    .userAvatar {
+        width: 56px !important;
+        height: 56px !important;
+        min-width: 56px !important;
+    }
+
+    .userName {
+        font-size: 16px !important;
+    }
+
+    .userStats {
+        margin-bottom: 20px;
+        padding: 14px;
+        gap: 14px;
+    }
+
+    .userActions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .primaryAction {
+        min-width: auto;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .userList {
+        gap: 12px;
+        padding: 12px 0;
+    }
+
+    .userCard {
+        :global(.ant-card-body) {
+            padding: 16px !important;
+        }
+    }
+
+    .userHeader {
+        gap: 10px;
+        margin-bottom: 14px;
+    }
+
+    .userAvatar {
+        width: 48px !important;
+        height: 48px !important;
+        min-width: 48px !important;
+    }
+
+    .userName {
+        font-size: 15px !important;
+    }
+
+    .userStats {
+        margin-bottom: 16px;
+        padding: 12px;
+        gap: 12px;
+    }
+
+    .statItem {
+        gap: 10px;
+    }
+
+    .statLabel {
+        font-size: 11px !important;
+    }
+
+    .statValue {
+        font-size: 13px !important;
+    }
 }

@@ -5,11 +5,11 @@ import { useAppSelector } from "../../../shared";
 
 export const useGetUsersList = () => {
     const users = useAppSelector((state) => state.users);
-    const { isError } = usersApi.useGetAllUsersQuery(null);
+    const { isError, isFetching } = usersApi.useGetAllUsersQuery(null);
 
     useEffect(() => {
         isError && message.error("Ошибка при получении списка постов");
     }, [isError]);
 
-    return { usersList: users.usersList };
+    return { usersList: users.usersList, isLoading: isFetching };
 };
