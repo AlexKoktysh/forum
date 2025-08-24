@@ -1,0 +1,7 @@
+@forward "@styles";
+@use "./actionStyles.module.scss" as base;
+
+.deleteButton {
+    @include base.actionButton();
+    @include base.buttonColors(#ff4757);
+}

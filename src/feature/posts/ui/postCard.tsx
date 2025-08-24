@@ -1,61 +1,44 @@
 import { type FC } from "react";
-import { Typography, Card, Tag, Avatar } from "antd";
-import { UserOutlined, CalendarOutlined, MessageOutlined } from "@ant-design/icons";
+import { Typography, Card, Tag } from "antd";
 import type { TPost } from "../../../entity/posts/model";
+import { CommentButton } from "../../comments";
+import { AuthorInfo, DeleteButton, FavoriteButton, LikeButton } from "../../../feature";
 
 import styles from "./styles.module.scss";
 
-const { Title, Paragraph } = Typography;
+const { Paragraph } = Typography;
 
 interface PostCardProps {
     post: TPost;
-    onDiscuss?: (postId: number) => void;
+    onPostClick?: (postId: number) => void;
     onUserClick?: (userId: number) => void;
 }
 
-export const PostCard: FC<PostCardProps> = ({ post, onDiscuss, onUserClick }) => {
-    const handleDiscussClick = () => {
-        onDiscuss?.(post.id);
-    };
-
-    const handleUserClick = () => {
-        onUserClick?.(post.userId);
+export const PostCard: FC<PostCardProps> = ({ post, onPostClick, onUserClick }) => {
+    const handlePostClick = () => {
+        onPostClick?.(post.id);
     };
 
     return (
         <Card
             className={styles.postCard}
             hoverable
+            onClick={handlePostClick}
             actions={[
-                <div key="user" className={styles.actionItem} onClick={handleUserClick}>
-                    <UserOutlined />
-                    <span>ID: {post.userId}</span>
-                </div>,
-                <div key="comments" className={styles.actionItem} onClick={handleDiscussClick}>
-                    <MessageOutlined />
-                    <span>Обсудить</span>
-                </div>,
-                <div key="date" className={styles.actionItem}>
-                    <CalendarOutlined />
-                    <span>Сегодня</span>
-                </div>,
+                <LikeButton postId={post.id} />,
+                <LikeButton postId={post.id} isDislikeButton={true} />,
+                <CommentButton postId={post.id} post={post} />,
+                <FavoriteButton post={post} />,
+                <DeleteButton postId={post.id} />,
             ]}
         >
-            <div className={styles.postHeader}>
-                <Avatar size="large" className={styles.userAvatar} icon={<UserOutlined />} onClick={handleUserClick} />
-                <div className={styles.postMeta}>
-                    <Title level={4} className={styles.postTitle}>
-                        {post.title}
-                    </Title>
-                    <div className={styles.postInfo}>
-                        <span className={styles.postId}>#{post.id}</span>
-                        <span className={styles.separator}>•</span>
-                        <span className={styles.userId} onClick={handleUserClick}>
-                            Пользователь {post.userId}
-                        </span>
-                    </div>
-                </div>
-            </div>
+            <AuthorInfo
+                post={post}
+                variant="card"
+                onUserClick={onUserClick}
+                showPostId={true}
+                className={styles.postHeader}
+            />
 
             <Paragraph className={styles.postBody} ellipsis={{ rows: 3, expandable: true, symbol: "читать далее" }}>
                 {post.body}

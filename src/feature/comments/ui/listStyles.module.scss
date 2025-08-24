@@ -1,0 +1,225 @@
+@forward "@styles";
+
+.commentsCard {
+    border-radius: 16px;
+    box-shadow: 0 4px 25px rgba(102, 126, 234, 0.08), 0 2px 12px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(102, 126, 234, 0.1);
+    animation: fadeInUp 0.6s ease-out;
+    animation-delay: 0.2s;
+
+    :global(.ant-card-head) {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+
+        :global(.ant-card-head-title) {
+            color: #667eea;
+            font-weight: 600;
+        }
+    }
+
+    .commentsPlaceholder {
+        padding: 40px;
+        text-align: center;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.02) 0%, rgba(118, 75, 162, 0.02) 100%);
+        border-radius: 8px;
+        border: 1px dashed rgba(102, 126, 234, 0.2);
+    }
+
+    .commentsList {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .commentItem {
+        padding: 16px;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.02) 0%, rgba(118, 75, 162, 0.02) 100%);
+        border-radius: 12px;
+        border: 1px solid rgba(102, 126, 234, 0.08);
+        transition: all 0.3s ease;
+
+        &:hover {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.04) 0%, rgba(118, 75, 162, 0.04) 100%);
+            border-color: rgba(102, 126, 234, 0.15);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 12px rgba(102, 126, 234, 0.1);
+        }
+
+        .commentHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+
+            .commentDate {
+                font-size: 12px;
+            }
+        }
+
+        .commentText {
+            color: #334155;
+            line-height: 1.6;
+        }
+    }
+
+    .commentInput {
+        margin-top: 16px;
+
+        .inputSection {
+            .textArea {
+                border-radius: 12px;
+                border: 2px solid rgba(102, 126, 234, 0.1);
+                padding: 12px 16px;
+                font-size: 14px;
+                line-height: 1.6;
+                transition: all 0.3s ease;
+                resize: vertical;
+                min-height: 100px;
+
+                &:hover {
+                    border-color: rgba(102, 126, 234, 0.3);
+                    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+                }
+
+                &:focus {
+                    border-color: #667eea;
+                    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.2);
+                    outline: none;
+                }
+
+                &::placeholder {
+                    color: #94a3b8;
+                    font-style: italic;
+                }
+
+                &:disabled {
+                    background: rgba(102, 126, 234, 0.02);
+                    color: #94a3b8;
+                    cursor: not-allowed;
+                }
+            }
+
+            .inputFooter {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 12px;
+                padding: 0 4px;
+
+                .charCount {
+                    font-size: 12px;
+                    color: #64748b;
+                    user-select: none;
+                }
+
+                .submitButton {
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    border: none;
+                    border-radius: 8px;
+                    height: 40px;
+                    padding: 0 20px;
+                    font-weight: 600;
+                    font-size: 14px;
+                    transition: all 0.3s ease;
+                    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+
+                    &:hover:not(:disabled) {
+                        background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+                        transform: translateY(-1px);
+                        box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+                    }
+
+                    &:active:not(:disabled) {
+                        transform: translateY(0);
+                        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+                    }
+
+                    &:disabled {
+                        background: #e2e8f0;
+                        color: #94a3b8;
+                        cursor: not-allowed;
+                        transform: none;
+                        box-shadow: none;
+                    }
+
+                    &:focus {
+                        outline: 2px solid rgba(102, 126, 234, 0.3);
+                        outline-offset: 2px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .commentsCard {
+        .commentItem {
+            padding: 12px;
+
+            .commentHeader {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+        }
+
+        .commentInput {
+            .inputSection {
+                .inputFooter {
+                    flex-direction: column;
+                    gap: 12px;
+                    align-items: stretch;
+
+                    .charCount {
+                        text-align: center;
+                    }
+
+                    .submitButton {
+                        width: 100%;
+                        height: 44px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .commentsCard {
+        .commentItem {
+            padding: 10px;
+        }
+
+        .commentInput {
+            .inputSection {
+                .textArea {
+                    padding: 10px 12px;
+                    font-size: 13px;
+                    min-height: 80px;
+                }
+
+                .inputFooter {
+                    margin-top: 8px;
+                    padding: 0 2px;
+
+                    .submitButton {
+                        height: 40px;
+                        font-size: 13px;
+                    }
+                }
+            }
+        }
+    }
+}

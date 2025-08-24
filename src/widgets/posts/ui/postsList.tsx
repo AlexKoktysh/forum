@@ -1,20 +1,27 @@
-import { useEffect, type FC } from "react";
-import { Typography, Tag } from "antd";
-import { MessageOutlined } from "@ant-design/icons";
-import { postsApi } from "../../../entity";
+import { type FC } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDeletePost, useGetPostsList } from "../../../entity";
 import type { TPost } from "../../../entity/posts/model";
-import { PostCard, PostsSkeleton } from "../../../feature";
+import { Counter, Empty, PostCard, PostsSkeleton, UserFilter } from "../../../feature";
 
 import styles from "./styles.module.scss";
 
-const { Title, Paragraph } = Typography;
+type IProps = {
+    isFavorite?: boolean;
+};
 
-export const PostsList: FC = () => {
-    const [getAllPosts, { data: postsList, isFetching }] = postsApi.useLazyGetAllPostsQuery();
+export const PostsList: FC<IProps> = ({ isFavorite = false }) => {
+    const navigate = useNavigate();
+    const { isFetching, postsList, filterUserId, setFilterUserId } = useGetPostsList({ isFavorite });
+    const { deletingPostId } = useDeletePost();
 
-    useEffect(() => {
-        getAllPosts(null);
-    }, [getAllPosts]);
+    const handlePostClick = (postId: number) => {
+        navigate(`/posts/${postId}`);
+    };
+
+    const handleUserFilterChange = (userId: number | null) => {
+        setFilterUserId(userId);
+    };
 
     if (isFetching) {
         return <PostsSkeleton count={3} />;
@@ -22,36 +29,37 @@ export const PostsList: FC = () => {
 
     return (
         <div className={styles.postsContainer}>
-            <div className={styles.header}>
-                <Title level={2} className={styles.title}>
-                    Все посты
-                </Title>
-                <Tag color="white" className={styles.counter}>
-                    {postsList?.length || 0} постов
-                </Tag>
-            </div>
+            <Counter
+                count={postsList?.length}
+                entityName="постов"
+                header={!isFavorite ? "Все посты" : "Избранные посты"}
+            />
+
+            <UserFilter selectedUserId={filterUserId} onUserChange={handleUserFilterChange} />
 
             <div className={styles.postsList}>
-                {postsList?.map((post: TPost) => (
-                    <PostCard
-                        key={post.id}
-                        post={post}
-                        onDiscuss={(postId) => console.log("Обсуждение поста:", postId)}
-                        onUserClick={(userId) => console.log("Клик по пользователю:", userId)}
-                    />
-                ))}
+                {postsList?.map((post: TPost) => {
+                    const isCurrentPostDeleting = deletingPostId === post.id;
 
-                {!postsList?.length ? (
-                    <div className={styles.emptyState}>
-                        <MessageOutlined className={styles.emptyIcon} />
-                        <Title level={3} className={styles.emptyTitle}>
-                            Пока нет постов
-                        </Title>
-                        <Paragraph className={styles.emptyDescription}>
-                            Здесь будут отображаться все посты от пользователей
-                        </Paragraph>
-                    </div>
-                ) : null}
+                    return (
+                        <div
+                            key={post.id}
+                            className={`${styles.postWrapper} ${isCurrentPostDeleting ? styles.fadingOut : ""} ${
+                                isCurrentPostDeleting ? styles.deleting : ""
+                            }`}
+                        >
+                            <PostCard
+                                post={post}
+                                onPostClick={handlePostClick}
+                                onUserClick={(userId) => setFilterUserId(userId)}
+                            />
+                        </div>
+                    );
+                })}
+
+                {!postsList?.length && (
+                    <Empty description="Здесь будут отображаться все посты от пользователей" title="Пока нет постов" />
+                )}
             </div>
         </div>
     );

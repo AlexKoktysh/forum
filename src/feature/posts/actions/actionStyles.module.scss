@@ -1,0 +1,63 @@
+@forward "@styles";
+
+// Миксин для базовых стилей кнопок действий
+@mixin actionButton() {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.2s ease;
+    border: none !important;
+    box-shadow: none !important;
+    color: #667eea;
+
+    &:hover {
+        border-color: transparent !important;
+        box-shadow: none !important;
+    }
+}
+
+// Общая анимация для иконок
+@keyframes heartBeat {
+    0% {
+        transform: scale(1);
+    }
+    20% {
+        transform: scale(1.2);
+    }
+    40% {
+        transform: scale(1);
+    }
+    60% {
+        transform: scale(1.1);
+    }
+    80% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+// Миксин для цветовых схем кнопок
+@mixin buttonColors($color, $opacity: 0.1, $hoverOpacity: 0.15) {
+    &:hover {
+        color: $color !important;
+        background: rgba($color, $opacity) !important;
+    }
+
+    &.favorite,
+    &.liked {
+        color: $color !important;
+        background: rgba($color, $opacity) !important;
+
+        .favoriteIcon,
+        .likedIcon {
+            color: $color !important;
+            animation: heartBeat 0.6s ease-in-out;
+        }
+
+        &:hover {
+            background: rgba($color, $hoverOpacity) !important;
+        }
+    }
+}

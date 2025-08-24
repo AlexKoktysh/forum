@@ -1,0 +1,107 @@
+@forward "@styles";
+
+.filterContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding: 16px;
+    background: linear-gradient(135deg, #f8f9ff 0%, #f0f2ff 100%);
+    border-radius: 12px;
+    border: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+.filterLabel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .filterIcon {
+        color: #667eea;
+        font-size: 16px;
+    }
+}
+
+.userSelect {
+    width: 100%;
+    max-width: 300px;
+
+    :global(.ant-select-selector) {
+        border-radius: 8px !important;
+        border: 1px solid rgba(102, 126, 234, 0.2) !important;
+        background: white !important;
+        transition: all 0.3s ease !important;
+
+        &:hover {
+            border-color: rgba(102, 126, 234, 0.4) !important;
+            box-shadow: 0 2px 4px rgba(102, 126, 234, 0.1) !important;
+        }
+    }
+
+    :global(.ant-select-focused) {
+        :global(.ant-select-selector) {
+            border-color: #667eea !important;
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2) !important;
+        }
+    }
+
+    :global(.ant-select-arrow) {
+        color: #667eea !important;
+    }
+
+    :global(.ant-select-clear) {
+        background: rgba(102, 126, 234, 0.1) !important;
+        border-radius: 50% !important;
+
+        &:hover {
+            background: rgba(102, 126, 234, 0.2) !important;
+        }
+    }
+}
+
+.activeFilter {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 6px;
+    border-left: 3px solid #667eea;
+
+    .activeFilterText {
+        font-size: var(--regular-size);
+        color: #667eea !important;
+        font-weight: var(--medium-weight);
+    }
+}
+
+@media (max-width: 768px) {
+    .filterContainer {
+        padding: 12px;
+        margin-bottom: 16px;
+    }
+
+    .userSelect {
+        max-width: 100%;
+    }
+
+    .filterLabel {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .filterContainer {
+        padding: 8px;
+        gap: 8px;
+    }
+
+    .activeFilter {
+        padding: 6px 8px;
+
+        .activeFilterText {
+            font-size: 13px;
+        }
+    }
+}

@@ -1,0 +1,7 @@
+@forward "@styles";
+@use "./actionStyles.module.scss" as base;
+
+.favoriteButton {
+    @include base.actionButton();
+    @include base.buttonColors(#ffa502);
+}
