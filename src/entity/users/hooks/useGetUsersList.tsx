@@ -8,7 +8,7 @@ export const useGetUsersList = () => {
     const { isError, isFetching } = usersApi.useGetAllUsersQuery(null);
 
     useEffect(() => {
-        isError && message.error("Ошибка при получении списка постов");
+        isError && message.error("Ошибка при получении списка пользователей");
     }, [isError]);
 
     return { usersList: users.usersList, isLoading: isFetching };

@@ -1,8 +1,12 @@
-import { type FC } from "react";
+import { type FC, useCallback, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "antd";
+import { ReloadOutlined } from "@ant-design/icons";
 import { useDeletePost, useGetPostsList } from "../../../entity";
 import type { TPost } from "../../../entity/posts/model";
-import { Counter, Empty, PostCard, PostsSkeleton, UserFilter } from "../../../feature";
+import { Counter, Empty, PostsSkeleton, UserFilter } from "../../../feature";
+import { useAppSelector, DragAndDropWrapper, useActions, RoleContext } from "../../../shared";
+import { SortablePostCard } from "./sortablePostCard";
 
 import styles from "./styles.module.scss";
 
@@ -12,16 +16,40 @@ type IProps = {
 
 export const PostsList: FC<IProps> = ({ isFavorite = false }) => {
     const navigate = useNavigate();
+    const { isAdmin } = useContext(RoleContext);
+    const { updatePostsOrder, resetPostsOrder } = useActions();
+
     const { isFetching, postsList, filterUserId, setFilterUserId } = useGetPostsList({ isFavorite });
     const { deletingPostId } = useDeletePost();
+    const customOrder = useAppSelector((state: any) => state.posts.customOrder);
 
-    const handlePostClick = (postId: number) => {
-        navigate(`/posts/${postId}`);
-    };
+    const handlePostClick = useCallback(
+        (postId: number) => {
+            navigate(`/posts/${postId}`);
+        },
+        [navigate],
+    );
 
-    const handleUserFilterChange = (userId: number | null) => {
-        setFilterUserId(userId);
-    };
+    const handleUserFilterChange = useCallback(
+        (userId: number | null) => {
+            setFilterUserId(userId);
+        },
+        [setFilterUserId],
+    );
+
+    const handlePostsReorder = useCallback(
+        (newPosts: TPost[]) => {
+            const newCustomOrder = newPosts.map((post) => post.id);
+            updatePostsOrder(newCustomOrder);
+        },
+        [updatePostsOrder],
+    );
+
+    const handleResetOrder = useCallback(() => {
+        resetPostsOrder();
+    }, [resetPostsOrder]);
+
+    const getPostId = useCallback((post: TPost) => post.id, []);
 
     if (isFetching) {
         return <PostsSkeleton count={3} />;
@@ -35,32 +63,49 @@ export const PostsList: FC<IProps> = ({ isFavorite = false }) => {
                 header={!isFavorite ? "Все посты" : "Избранные посты"}
             />
 
-            <UserFilter selectedUserId={filterUserId} onUserChange={handleUserFilterChange} />
+            <div className={styles.controlsContainer}>
+                <UserFilter selectedUserId={filterUserId} onUserChange={handleUserFilterChange} />
 
-            <div className={styles.postsList}>
+                {!isFavorite && customOrder.length > 0 && (
+                    <Button type="default" icon={<ReloadOutlined />} onClick={handleResetOrder} size="small">
+                        Сбросить порядок
+                    </Button>
+                )}
+            </div>
+
+            <DragAndDropWrapper
+                items={postsList || []}
+                getItemId={getPostId}
+                onItemsReorder={handlePostsReorder}
+                className={styles.postsList}
+                sortable={!isFavorite && isAdmin}
+            >
                 {postsList?.map((post: TPost) => {
                     const isCurrentPostDeleting = deletingPostId === post.id;
 
                     return (
-                        <div
+                        <SortablePostCard
                             key={post.id}
-                            className={`${styles.postWrapper} ${isCurrentPostDeleting ? styles.fadingOut : ""} ${
-                                isCurrentPostDeleting ? styles.deleting : ""
-                            }`}
-                        >
-                            <PostCard
-                                post={post}
-                                onPostClick={handlePostClick}
-                                onUserClick={(userId) => setFilterUserId(userId)}
-                            />
-                        </div>
+                            post={post}
+                            isDeleting={isCurrentPostDeleting}
+                            onPostClick={handlePostClick}
+                            onUserClick={(userId: number) => setFilterUserId(userId)}
+                            sortable={!isFavorite && isAdmin}
+                        />
                     );
                 })}
 
                 {!postsList?.length && (
-                    <Empty description="Здесь будут отображаться все посты от пользователей" title="Пока нет постов" />
+                    <Empty
+                        description={
+                            !isFavorite
+                                ? "Здесь будут отображаться все посты от пользователей"
+                                : "Здесь будут отображаться избранные посты"
+                        }
+                        title={!isFavorite ? "Пока нет постов" : "Пока нет избранных постов"}
+                    />
                 )}
-            </div>
+            </DragAndDropWrapper>
         </div>
     );
 };

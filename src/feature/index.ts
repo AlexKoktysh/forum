@@ -5,4 +5,4 @@ export { PostCard, PostsSkeleton, UserFilter, CreateModal, DeleteButton, Favorit
 export { Counter } from "./counter";
 export { Empty } from "./empty";
 export { CommentButton, CommentsList, CommentsModal } from "./comments";
-export { AuthorInfo, SkeletonUserList, UserCard } from "./users";
+export { AuthorInfo, SkeletonUserList, UserCard, UserHeader, EditUserForm, UserInfo } from "./users";

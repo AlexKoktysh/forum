@@ -11,6 +11,7 @@ export const useGetPostsList = ({ isFavorite = false }: IProps = {}) => {
     const [filterUserId, setFilterUserId] = useState<number | null>(null);
     const postsList = useAppSelector((state) => state.posts.postsList);
     const favoriteList = useAppSelector((state) => state.posts.favoritesPosts);
+    const customOrder = useAppSelector((state) => state.posts.customOrder);
 
     const apiQuery = useMemo(() => {
         return filterUserId ? { userId: filterUserId } : null;
@@ -21,11 +22,30 @@ export const useGetPostsList = ({ isFavorite = false }: IProps = {}) => {
     }, [isFavorite, favoriteList, postsList]);
 
     const filteredPostsList = useMemo(() => {
-        if (isFavorite) {
-            return basePostsList.filter((post) => !filterUserId || post.userId === filterUserId);
+        const filtered = isFavorite
+            ? basePostsList.filter((post) => !filterUserId || post.userId === filterUserId)
+            : basePostsList;
+
+        if (isFavorite || customOrder.length === 0) {
+            return filtered;
         }
-        return basePostsList;
-    }, [basePostsList, filterUserId, isFavorite]);
+
+        const orderMap = new Map(customOrder.map((id, index) => [id, index]));
+
+        return [...filtered].sort((a, b) => {
+            const aOrder = orderMap.get(a.id);
+            const bOrder = orderMap.get(b.id);
+
+            if (aOrder !== undefined && bOrder !== undefined) {
+                return aOrder - bOrder;
+            }
+
+            if (aOrder !== undefined) return -1;
+            if (bOrder !== undefined) return 1;
+
+            return a.id - b.id;
+        });
+    }, [basePostsList, filterUserId, isFavorite, customOrder]);
 
     const { isFetching, isError, refetch } = postsApi.useGetAllPostsQuery(apiQuery);
 

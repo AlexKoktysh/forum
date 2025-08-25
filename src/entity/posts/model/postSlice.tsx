@@ -6,10 +6,12 @@ const initialState: {
     postsList: TPost[];
     deletingPostId: number | null;
     favoritesPosts: TPost[];
+    customOrder: number[];
 } = {
     postsList: [],
     favoritesPosts: [],
     deletingPostId: null,
+    customOrder: [],
 };
 
 const postsSlice = createSlice({
@@ -28,6 +30,12 @@ const postsSlice = createSlice({
             } else {
                 state.favoritesPosts = [...state.favoritesPosts, post];
             }
+        },
+        updatePostsOrder(state, action: PayloadAction<number[]>) {
+            state.customOrder = action.payload;
+        },
+        resetPostsOrder(state) {
+            state.customOrder = [];
         },
     },
     extraReducers(builder) {

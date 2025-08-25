@@ -1,7 +1,7 @@
 import { useEffect, type FC } from "react";
-import { Modal, Form, Input, Button, Space } from "antd";
+import { Form, Input, Button, Space } from "antd";
 import { useCreatePost } from "../../../entity";
-import { useAppSelector } from "../../../shared";
+import { useAppSelector, ModalComponent } from "../../../shared";
 
 import styles from "./createModalStyles.module.scss";
 
@@ -38,15 +38,7 @@ export const CreateModal: FC<CreateModalProps> = ({ isOpen, onClose }) => {
     }, [isNeedCloseModal]);
 
     return (
-        <Modal
-            title="Создать новый пост"
-            open={isOpen}
-            onCancel={handleCancel}
-            footer={null}
-            width={600}
-            className={styles.createModal}
-            destroyOnHidden
-        >
+        <ModalComponent title="✍️ Создать новый пост" isOpen={isOpen} onClose={handleCancel} width={600}>
             <div className={styles.modalContent}>
                 <Form form={form} layout="vertical" onFinish={handleSubmit} className={styles.createForm}>
                     <Form.Item
@@ -95,6 +87,6 @@ export const CreateModal: FC<CreateModalProps> = ({ isOpen, onClose }) => {
                     </Form.Item>
                 </Form>
             </div>
-        </Modal>
+        </ModalComponent>
     );
 };

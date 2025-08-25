@@ -1,7 +1,8 @@
-import { type FC } from "react";
+import { useState, type FC } from "react";
 import { Avatar, Card, Typography, Button } from "antd";
 import { UserOutlined, CalendarOutlined } from "@ant-design/icons";
 import type { TUser } from "../../../entity";
+import { EditUserModal } from "./editUserModal";
 
 import styles from "./styles.module.scss";
 
@@ -12,16 +13,18 @@ interface UserCardProps {
 }
 
 export const UserCard: FC<UserCardProps> = ({ user }) => {
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
     const handleUserClick = () => {
-        console.log("user.id", user.id);
+        setIsEditModalOpen(true);
     };
 
-    const handleCardClick = () => {
-        console.log("user.id", user.id);
+    const handleCloseModal = () => {
+        setIsEditModalOpen(false);
     };
 
     return (
-        <Card className={styles.userCard} hoverable onClick={handleCardClick} bodyStyle={{ padding: "24px" }}>
+        <Card className={styles.userCard} hoverable styles={{ body: { padding: "24px" } }}>
             <div className={styles.userHeader}>
                 <Avatar size={64} className={styles.userAvatar} icon={<UserOutlined />} />
                 <div className={styles.userInfo}>
@@ -55,6 +58,8 @@ export const UserCard: FC<UserCardProps> = ({ user }) => {
                     Редактировать профиль
                 </Button>
             </div>
+
+            <EditUserModal user={user} isOpen={isEditModalOpen} onClose={handleCloseModal} />
         </Card>
     );
 };
