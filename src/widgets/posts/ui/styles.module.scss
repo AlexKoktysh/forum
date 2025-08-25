@@ -28,17 +28,29 @@
     overflow-y: auto;
     height: calc(100vh - 400px);
     padding-right: 4px; /* Небольшой отступ для красоты */
+    // Оптимизации для производительности
+    contain: layout style paint;
+    // Плавная прокрутка
+    scroll-behavior: smooth;
+    // Оптимизация для длинных списков
+    overscroll-behavior: contain;
 }
 
 .postWrapper {
-    transition: all 0.5s ease;
+    // Оптимизированные переходы - только для необходимых свойств
+    transition: opacity 0.3s ease, max-height 0.3s ease, margin 0.3s ease;
     opacity: 1;
-    transform: translateX(0);
     max-height: 1000px;
+    // Включаем аппаратное ускорение
+    will-change: transform, opacity;
+    // Улучшенный рендеринг
+    transform: translateZ(0);
 
     // Cursor только для сортируемых элементов
     &[data-sortable="true"] {
         cursor: grab;
+        // Оптимизируем для touch устройств
+        touch-action: none;
 
         &:active {
             cursor: grabbing;
@@ -48,6 +60,7 @@
     &.deleting {
         pointer-events: none;
         opacity: 0.6;
+        transition: opacity 0.2s ease; // Быстрее для удаления
 
         :global(*) {
             cursor: not-allowed !important;
@@ -56,19 +69,25 @@
 
     &.fadingOut {
         opacity: 0;
-        transform: translateX(-20px);
         max-height: 0;
         margin-bottom: 0;
         padding-top: 0;
         padding-bottom: 0;
+        // Быстрый переход для удаления
+        transition: all 0.2s ease;
     }
 
     &.dragging {
+        // Убираем тяжелые эффекты во время перетаскивания
         z-index: 999;
-        opacity: 0.8;
-        transform: rotate(5deg);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        opacity: 0.9;
+        // Минимальные трансформации для производительности
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         cursor: grabbing;
+        // Отключаем стандартные переходы во время drag
+        transition: none !important;
+        // Улучшенная производительность для drag
+        transform: translateZ(0);
     }
 }
 

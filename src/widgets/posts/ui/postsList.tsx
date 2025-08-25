@@ -1,12 +1,11 @@
-import { type FC } from "react";
+import { type FC, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
 import { useDeletePost, useGetPostsList } from "../../../entity";
 import type { TPost } from "../../../entity/posts/model";
 import { Counter, Empty, PostsSkeleton, UserFilter } from "../../../feature";
-import { useAppDispatch, useAppSelector, DragAndDropWrapper } from "../../../shared";
-import { postsActions } from "../../../entity/posts/model/postSlice";
+import { useAppSelector, DragAndDropWrapper, useActions } from "../../../shared";
 import { SortablePostCard } from "./sortablePostCard";
 
 import styles from "./styles.module.scss";
@@ -17,27 +16,40 @@ type IProps = {
 
 export const PostsList: FC<IProps> = ({ isFavorite = false }) => {
     const navigate = useNavigate();
-    const dispatch = useAppDispatch();
+    const { updatePostsOrder, resetPostsOrder } = useActions();
+
     const { isFetching, postsList, filterUserId, setFilterUserId } = useGetPostsList({ isFavorite });
     const { deletingPostId } = useDeletePost();
     const customOrder = useAppSelector((state: any) => state.posts.customOrder);
 
-    const handlePostClick = (postId: number) => {
-        navigate(`/posts/${postId}`);
-    };
+    const handlePostClick = useCallback(
+        (postId: number) => {
+            navigate(`/posts/${postId}`);
+        },
+        [navigate],
+    );
 
-    const handleUserFilterChange = (userId: number | null) => {
-        setFilterUserId(userId);
-    };
+    const handleUserFilterChange = useCallback(
+        (userId: number | null) => {
+            setFilterUserId(userId);
+        },
+        [setFilterUserId],
+    );
 
-    const handlePostsReorder = (newPosts: TPost[]) => {
-        const newCustomOrder = newPosts.map((post) => post.id);
-        dispatch(postsActions.updatePostsOrder(newCustomOrder));
-    };
+    const handlePostsReorder = useCallback(
+        (newPosts: TPost[]) => {
+            const newCustomOrder = newPosts.map((post) => post.id);
+            updatePostsOrder(newCustomOrder);
+        },
+        [updatePostsOrder],
+    );
 
-    const handleResetOrder = () => {
-        dispatch(postsActions.resetPostsOrder());
-    };
+    const handleResetOrder = useCallback(() => {
+        resetPostsOrder();
+    }, [resetPostsOrder]);
+
+    // Мемоизируем функцию для получения ID поста
+    const getPostId = useCallback((post: TPost) => post.id, []);
 
     if (isFetching) {
         return <PostsSkeleton count={3} />;
@@ -63,7 +75,7 @@ export const PostsList: FC<IProps> = ({ isFavorite = false }) => {
 
             <DragAndDropWrapper
                 items={postsList || []}
-                getItemId={(post) => post.id}
+                getItemId={getPostId}
                 onItemsReorder={handlePostsReorder}
                 className={styles.postsList}
                 sortable={!isFavorite} // Сортировка только для обычных постов

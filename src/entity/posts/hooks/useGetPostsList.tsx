@@ -22,30 +22,29 @@ export const useGetPostsList = ({ isFavorite = false }: IProps = {}) => {
     }, [isFavorite, favoriteList, postsList]);
 
     const filteredPostsList = useMemo(() => {
-        let filtered = isFavorite
+        const filtered = isFavorite
             ? basePostsList.filter((post) => !filterUserId || post.userId === filterUserId)
             : basePostsList;
 
-        // Применяем пользовательский порядок сортировки, если он есть
-        if (customOrder.length > 0 && !isFavorite) {
-            const orderedPosts = [];
-            const remainingPosts = [...filtered];
-
-            // Сначала добавляем посты в пользовательском порядке
-            for (const postId of customOrder) {
-                const postIndex = remainingPosts.findIndex((post) => post.id === postId);
-                if (postIndex !== -1) {
-                    orderedPosts.push(remainingPosts.splice(postIndex, 1)[0]);
-                }
-            }
-
-            // Затем добавляем оставшиеся посты (новые, которых не было в порядке)
-            orderedPosts.push(...remainingPosts);
-
-            return orderedPosts;
+        if (isFavorite || customOrder.length === 0) {
+            return filtered;
         }
 
-        return filtered;
+        const orderMap = new Map(customOrder.map((id, index) => [id, index]));
+
+        return [...filtered].sort((a, b) => {
+            const aOrder = orderMap.get(a.id);
+            const bOrder = orderMap.get(b.id);
+
+            if (aOrder !== undefined && bOrder !== undefined) {
+                return aOrder - bOrder;
+            }
+
+            if (aOrder !== undefined) return -1;
+            if (bOrder !== undefined) return 1;
+
+            return a.id - b.id;
+        });
     }, [basePostsList, filterUserId, isFavorite, customOrder]);
 
     const { isFetching, isError, refetch } = postsApi.useGetAllPostsQuery(apiQuery);

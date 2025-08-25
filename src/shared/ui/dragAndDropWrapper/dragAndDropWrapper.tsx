@@ -1,4 +1,4 @@
-import { type ReactElement, type ReactNode } from "react";
+import { type ReactNode, useMemo, useCallback, type ReactElement } from "react";
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
 import {
     arrayMove,
@@ -7,7 +7,7 @@ import {
     verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 
-interface DragEndEvent {
+export interface DragEndEvent {
     active: {
         id: string | number;
     };
@@ -34,34 +34,54 @@ export const DragAndDropWrapper = <T,>({
     sortable = true,
 }: DragAndDropWrapperProps<T>): ReactElement => {
     const sensors = useSensors(
-        useSensor(PointerSensor),
+        useSensor(PointerSensor, {
+            activationConstraint: {
+                distance: 8,
+            },
+        }),
         useSensor(KeyboardSensor, {
             coordinateGetter: sortableKeyboardCoordinates,
         }),
     );
 
-    const handleDragEnd = (event: DragEndEvent) => {
-        if (!sortable || !onItemsReorder) return;
+    const handleDragEnd = useCallback(
+        (event: DragEndEvent) => {
+            if (!sortable || !onItemsReorder) return;
 
-        const { active, over } = event;
+            const { active, over } = event;
 
-        if (active.id !== over?.id && items) {
-            const oldIndex = items.findIndex((item) => getItemId(item) === active.id);
-            const newIndex = items.findIndex((item) => getItemId(item) === over?.id);
+            if (active.id !== over?.id && items && over) {
+                const oldIndex = items.findIndex((item) => getItemId(item) === active.id);
+                const newIndex = items.findIndex((item) => getItemId(item) === over.id);
 
-            const newItems = arrayMove(items, oldIndex, newIndex);
-            onItemsReorder(newItems);
-        }
-    };
+                if (oldIndex !== -1 && newIndex !== -1) {
+                    const newItems = arrayMove(items, oldIndex, newIndex);
+                    onItemsReorder(newItems);
+                }
+            }
+        },
+        [sortable, onItemsReorder, items, getItemId],
+    );
+
+    const itemIds = useMemo(() => items.map(getItemId), [items, getItemId]);
 
     if (!sortable) {
         return <div className={className}>{children}</div>;
     }
 
-    const itemIds = items.map(getItemId);
-
     return (
-        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+            autoScroll={{
+                threshold: {
+                    x: 0.2,
+                    y: 0.2,
+                },
+                acceleration: 0.1,
+            }}
+        >
             <SortableContext items={itemIds} strategy={verticalListSortingStrategy}>
                 <div className={className}>{children}</div>
             </SortableContext>
