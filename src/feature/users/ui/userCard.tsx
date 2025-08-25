@@ -1,7 +1,8 @@
-import { type FC } from "react";
+import { useState, type FC } from "react";
 import { Avatar, Card, Typography, Button } from "antd";
 import { UserOutlined, CalendarOutlined } from "@ant-design/icons";
 import type { TUser } from "../../../entity";
+import { EditUserModal } from "./editUserModal";
 
 import styles from "./styles.module.scss";
 
@@ -12,8 +13,14 @@ interface UserCardProps {
 }
 
 export const UserCard: FC<UserCardProps> = ({ user }) => {
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
     const handleUserClick = () => {
-        console.log("user.id", user.id);
+        setIsEditModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsEditModalOpen(false);
     };
 
     return (
@@ -51,6 +58,8 @@ export const UserCard: FC<UserCardProps> = ({ user }) => {
                     Редактировать профиль
                 </Button>
             </div>
+
+            <EditUserModal user={user} isOpen={isEditModalOpen} onClose={handleCloseModal} />
         </Card>
     );
 };

@@ -4,3 +4,4 @@ export { UserCard } from "./userCard";
 export { UserHeader } from "./userHeader";
 export { EditUserForm } from "./editUserForm";
 export { UserInfo } from "./user";
+export { EditUserModal } from "./editUserModal";

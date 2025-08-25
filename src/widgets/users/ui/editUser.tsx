@@ -8,11 +8,13 @@ import styles from "./editStyles.module.scss";
 
 interface IProps {
     user: TUser;
+    isDefaultEditMode?: boolean;
+    onClose?: () => void;
 }
 
-export const EditUser: FC<IProps> = ({ user }) => {
+export const EditUser: FC<IProps> = ({ user, isDefaultEditMode = false, onClose }) => {
     const myProfile = useAppSelector((state) => state.auth.data);
-    const [isEditing, setIsEditing] = useState(false);
+    const [isEditing, setIsEditing] = useState(isDefaultEditMode);
 
     const { changingUser, setAuthUser } = useActions();
     const [form] = Form.useForm();
@@ -32,6 +34,7 @@ export const EditUser: FC<IProps> = ({ user }) => {
         changingUser({ id: user.id, username: values.username });
         myProfile?.id === user.id && setAuthUser({ ...myProfile, email: values.username });
         setIsEditing(false);
+        onClose?.();
     };
 
     return (
