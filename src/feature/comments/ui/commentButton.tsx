@@ -1,19 +1,19 @@
-import { type FC, useState } from "react";
+import { type FC, useState, useMemo } from "react";
 import { Button } from "antd";
 import { MessageOutlined } from "@ant-design/icons";
 import { useAppSelector } from "../../../shared";
-import type { TPost } from "../../../entity";
 import { CommentsModal } from "./commentsModal";
 
 import styles from "./styles.module.scss";
 
 interface CommentButtonProps {
     postId: number;
-    post: TPost;
 }
 
-export const CommentButton: FC<CommentButtonProps> = ({ postId, post }) => {
-    const comments = useAppSelector((state) => state.comments.data[postId] || []);
+export const CommentButton: FC<CommentButtonProps> = ({ postId }) => {
+    const post = useAppSelector((state) => state.posts.postsList.find(({ id }) => postId === id));
+    const commentsData = useAppSelector((state) => state.comments.data[postId]);
+    const comments = useMemo(() => commentsData || [], [commentsData]);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleClick = (e: React.MouseEvent) => {

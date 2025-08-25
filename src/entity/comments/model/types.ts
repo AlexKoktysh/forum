@@ -1,7 +1,7 @@
 export type TComment = {
     id: number;
     postId: number;
-    userId: number;
+    userName: string;
     text: string;
     createdAt: string;
 };

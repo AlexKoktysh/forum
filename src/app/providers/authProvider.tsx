@@ -6,8 +6,10 @@ interface IProvider {
     children: ReactElement;
 }
 
+const mockedUserId = 11;
+
 export const AuthProvider: FC<IProvider> = ({ children }) => {
-    const { setAuthUser } = useActions();
+    const { setAuthUser, setDefaultUser } = useActions();
 
     const [isAuth, setIsAuth] = useState(false);
 
@@ -15,8 +17,9 @@ export const AuthProvider: FC<IProvider> = ({ children }) => {
         () => ({
             isAuth,
             signInHandler: (values: TAuthDto) => {
+                setDefaultUser({ id: mockedUserId, username: values.email });
                 setIsAuth(true);
-                setAuthUser(values);
+                setAuthUser({ ...values, id: mockedUserId });
             },
             signOutHandler: () => setIsAuth(false),
         }),

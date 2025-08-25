@@ -64,7 +64,6 @@ export const AuthorInfo: FC<PostAuthorInfoProps> = ({
                 size={avatarSize}
                 className={getAvatarClassName()}
                 icon={<UserOutlined />}
-                // onClick={onUserClick ? handleUserClick : undefined}
                 style={{ cursor: onUserClick ? "pointer" : "default" }}
             />
             <div className={styles.postMeta}>

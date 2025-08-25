@@ -1,4 +1,4 @@
-import { type FC, useState } from "react";
+import { type FC, useState, useMemo } from "react";
 import { Card, Typography, Input, Button, Divider } from "antd";
 import { SendOutlined } from "@ant-design/icons";
 import { useAppSelector, useActions } from "../../../shared";
@@ -13,7 +13,9 @@ interface CommentsListProps {
 }
 
 export const CommentsList: FC<CommentsListProps> = ({ postId }) => {
-    const comments = useAppSelector((state) => state.comments.data[postId] || []);
+    const user = useAppSelector((state) => state.auth.data);
+    const commentsData = useAppSelector((state) => state.comments.data[postId]);
+    const comments = useMemo(() => commentsData || [], [commentsData]);
     const { addComment } = useActions();
     const [commentText, setCommentText] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -26,7 +28,7 @@ export const CommentsList: FC<CommentsListProps> = ({ postId }) => {
         const newComment = {
             id: Date.now(),
             postId,
-            userId: 1, // TODO: заменить на реального пользователя
+            userName: user?.email ?? "email",
             text: commentText.trim(),
             createdAt: new Date().toISOString(),
         };
@@ -45,7 +47,6 @@ export const CommentsList: FC<CommentsListProps> = ({ postId }) => {
 
     return (
         <Card className={styles.commentsCard} title={`Комментарии (${comments.length})`}>
-            {/* Список комментариев */}
             {comments.length === 0 ? (
                 <div className={styles.commentsPlaceholder}>
                     <Text type="secondary">Пока нет комментариев. Будьте первым!</Text>
@@ -55,7 +56,7 @@ export const CommentsList: FC<CommentsListProps> = ({ postId }) => {
                     {comments.map((comment) => (
                         <div key={comment.id} className={styles.commentItem}>
                             <div className={styles.commentHeader}>
-                                <Text strong>Пользователь {comment.userId}</Text>
+                                <Text strong>{comment.userName}</Text>
                                 <Text type="secondary" className={styles.commentDate}>
                                     {new Date(comment.createdAt).toLocaleString()}
                                 </Text>
@@ -68,7 +69,6 @@ export const CommentsList: FC<CommentsListProps> = ({ postId }) => {
                 </div>
             )}
 
-            {/* Поле для добавления комментария */}
             <Divider />
             <div className={styles.commentInput}>
                 <div className={styles.inputSection}>

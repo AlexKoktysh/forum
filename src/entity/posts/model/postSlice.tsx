@@ -64,6 +64,9 @@ const postsSlice = createSlice({
                 state.postsList = state.postsList.filter(({ id }) => postId !== id);
             },
         );
+        builder.addMatcher(postsApi.endpoints.createPost.matchFulfilled, (state, { payload }) => {
+            state.postsList = [payload, ...state.postsList];
+        });
     },
 });
 

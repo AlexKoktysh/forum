@@ -4,3 +4,7 @@ export type TPost = {
     title: string;
     body: string;
 };
+
+// export type TPostDto = {
+//     userName
+// }

@@ -23,5 +23,12 @@ export const postsApi = baseInstance.enhanceEndpoints({ addTagTypes: ["posts"] }
                 method: "DELETE",
             }),
         }),
+        createPost: build.mutation<TPost, Omit<TPost, "id">>({
+            query: (body) => ({
+                url: BASE_URL,
+                method: "POST",
+                body,
+            }),
+        }),
     }),
 });

@@ -11,7 +11,7 @@ const { Text } = Typography;
 interface CommentsModalProps {
     isOpen: boolean;
     onClose: () => void;
-    post: TPost | null;
+    post?: TPost;
 }
 
 export const CommentsModal: FC<CommentsModalProps> = ({ isOpen, onClose, post }) => {

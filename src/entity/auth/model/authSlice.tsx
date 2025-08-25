@@ -1,8 +1,8 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit/react";
-import type { TAuthDto } from "../types";
+import type { TAuthDto, WithId } from "../types";
 
 const initialState: {
-    data: TAuthDto | null;
+    data: WithId<TAuthDto> | null;
 } = {
     data: null,
 };
@@ -11,7 +11,7 @@ const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        setAuthUser(state, action: PayloadAction<TAuthDto | null>) {
+        setAuthUser(state, action: PayloadAction<WithId<TAuthDto> | null>) {
             state.data = action.payload;
         },
     },
