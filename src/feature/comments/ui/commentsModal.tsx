@@ -1,8 +1,9 @@
 import { type FC } from "react";
-import { Modal, Typography } from "antd";
+import { Typography } from "antd";
 import { type TPost } from "../../../entity";
 import { CommentsList } from "../../comments";
 import { AuthorInfo } from "../../../feature";
+import { ModalComponent } from "../../../shared";
 
 import styles from "./modalStyles.module.scss";
 
@@ -22,17 +23,14 @@ export const CommentsModal: FC<CommentsModalProps> = ({ isOpen, onClose, post })
     };
 
     return (
-        <Modal
-            title="Комментарии к посту"
-            open={isOpen}
-            onCancel={(e) => {
+        <ModalComponent
+            title="💬 Комментарии к посту"
+            isOpen={isOpen}
+            onClose={(e: Event) => {
                 e.stopPropagation();
                 onClose();
             }}
-            footer={null}
             width={800}
-            className={styles.commentsModal}
-            destroyOnHidden
             maskClosable={true}
         >
             <div className={styles.modalContent} onClick={handleModalClick}>
@@ -50,6 +48,6 @@ export const CommentsModal: FC<CommentsModalProps> = ({ isOpen, onClose, post })
                     <CommentsList postId={post.id} />
                 </div>
             </div>
-        </Modal>
+        </ModalComponent>
     );
 };

@@ -1,85 +1,6 @@
 @forward "@styles";
 
-.commentsModal {
-    // Предотвращаем всплытие событий
-    pointer-events: auto;
-
-    :global(.ant-modal-header) {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border: none;
-        border-radius: 16px 16px 0 0;
-        padding: 20px 24px;
-        position: relative;
-
-        &::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-            border-radius: 16px 16px 0 0;
-        }
-
-        :global(.ant-modal-title) {
-            color: #ffffff;
-            font-weight: 700;
-            font-size: 20px;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            letter-spacing: 0.025em;
-            position: relative;
-            z-index: 1;
-
-            &::before {
-                content: "💬";
-                margin-right: 8px;
-                font-size: 18px;
-            }
-        }
-    }
-
-    :global(.ant-modal-content) {
-        border-radius: 16px;
-        overflow: hidden;
-        box-shadow: 0 8px 40px rgba(102, 126, 234, 0.15), 0 4px 20px rgba(0, 0, 0, 0.08);
-        pointer-events: auto;
-    }
-
-    :global(.ant-modal-body) {
-        padding: 0;
-        max-height: 70vh;
-        overflow-y: auto;
-    }
-
-    :global(.ant-modal-close) {
-        color: rgba(255, 255, 255, 0.8);
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
-        width: 32px;
-        height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-
-        &:hover {
-            color: #ffffff;
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(1.05);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-        }
-
-        :global(.anticon) {
-            font-size: 14px;
-        }
-    }
-}
-
 .modalContent {
-    // Убеждаемся, что события не всплывают
     pointer-events: auto;
 
     .postInfo {
@@ -130,7 +51,6 @@
     .commentsSection {
         padding: 24px;
 
-        // Переопределяем стили для CommentsList в модальном окне
         :global(.ant-card) {
             border: none;
             box-shadow: none;
@@ -155,19 +75,7 @@
     }
 }
 
-// Адаптивные стили
 @media (max-width: 768px) {
-    .commentsModal {
-        :global(.ant-modal-content) {
-            margin: 16px;
-            max-width: calc(100vw - 32px);
-        }
-
-        :global(.ant-modal-body) {
-            max-height: 75vh;
-        }
-    }
-
     .modalContent {
         .postInfo {
             padding: 16px;
@@ -203,17 +111,6 @@
 }
 
 @media (max-width: 480px) {
-    .commentsModal {
-        :global(.ant-modal-content) {
-            margin: 8px;
-            max-width: calc(100vw - 16px);
-        }
-
-        :global(.ant-modal-body) {
-            max-height: 80vh;
-        }
-    }
-
     .modalContent {
         .postInfo {
             padding: 12px;
