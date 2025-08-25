@@ -1,5 +1,13 @@
 import { type ReactNode, useMemo, useCallback, type ReactElement } from "react";
-import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
+import {
+    DndContext,
+    closestCenter,
+    KeyboardSensor,
+    PointerSensor,
+    TouchSensor,
+    useSensor,
+    useSensors,
+} from "@dnd-kit/core";
 import {
     arrayMove,
     SortableContext,
@@ -36,7 +44,13 @@ export const DragAndDropWrapper = <T,>({
     const sensors = useSensors(
         useSensor(PointerSensor, {
             activationConstraint: {
-                distance: 8,
+                distance: 0.1,
+            },
+        }),
+        useSensor(TouchSensor, {
+            activationConstraint: {
+                delay: 50,
+                tolerance: 5,
             },
         }),
         useSensor(KeyboardSensor, {
@@ -46,6 +60,13 @@ export const DragAndDropWrapper = <T,>({
 
     const handleDragEnd = useCallback(
         (event: DragEndEvent) => {
+            const draggedElement = document.querySelector(`[data-sortable-id="${event.active.id}"]`) as HTMLElement;
+            if (draggedElement) {
+                draggedElement.style.transform = "";
+                draggedElement.style.transition = "";
+                draggedElement.style.zIndex = "";
+            }
+
             if (!sortable || !onItemsReorder) return;
 
             const { active, over } = event;
@@ -74,12 +95,20 @@ export const DragAndDropWrapper = <T,>({
             sensors={sensors}
             collisionDetection={closestCenter}
             onDragEnd={handleDragEnd}
+            onDragStart={(event) => {
+                const draggedElement = document.querySelector(`[data-sortable-id="${event.active.id}"]`) as HTMLElement;
+                if (draggedElement) {
+                    draggedElement.style.transform = "scale(1.02) rotate(1deg)";
+                    draggedElement.style.transition = "none";
+                    draggedElement.style.zIndex = "1001";
+                }
+            }}
             autoScroll={{
                 threshold: {
-                    x: 0.2,
-                    y: 0.2,
+                    x: 0.1,
+                    y: 0.1,
                 },
-                acceleration: 0.1,
+                acceleration: 0.05,
             }}
         >
             <SortableContext items={itemIds} strategy={verticalListSortingStrategy}>

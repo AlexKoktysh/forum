@@ -27,40 +27,33 @@
     gap: 20px;
     overflow-y: auto;
     height: calc(100vh - 400px);
-    padding-right: 4px; /* Небольшой отступ для красоты */
-    // Оптимизации для производительности
+    padding-right: 4px;
     contain: layout style paint;
-    // Плавная прокрутка
     scroll-behavior: smooth;
-    // Оптимизация для длинных списков
     overscroll-behavior: contain;
 }
 
 .postWrapper {
-    // Оптимизированные переходы - только для необходимых свойств
-    transition: opacity 0.3s ease, max-height 0.3s ease, margin 0.3s ease;
+    // Только transitions для анимаций удаления
+    transition: max-height 0.3s ease, margin 0.3s ease;
     opacity: 1;
     max-height: 1000px;
-    // Включаем аппаратное ускорение
     will-change: transform, opacity;
-    // Улучшенный рендеринг
     transform: translateZ(0);
+    position: relative;
 
-    // Cursor только для сортируемых элементов
     &[data-sortable="true"] {
-        cursor: grab;
-        // Оптимизируем для touch устройств
         touch-action: none;
-
-        &:active {
-            cursor: grabbing;
-        }
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
     }
 
     &.deleting {
         pointer-events: none;
         opacity: 0.6;
-        transition: opacity 0.2s ease; // Быстрее для удаления
+        transition: opacity 0.2s ease;
 
         :global(*) {
             cursor: not-allowed !important;
@@ -73,21 +66,18 @@
         margin-bottom: 0;
         padding-top: 0;
         padding-bottom: 0;
-        // Быстрый переход для удаления
         transition: all 0.2s ease;
     }
 
     &.dragging {
-        // Убираем тяжелые эффекты во время перетаскивания
-        z-index: 999;
-        opacity: 0.9;
-        // Минимальные трансформации для производительности
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+        opacity: 0.8;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
         cursor: grabbing;
-        // Отключаем стандартные переходы во время drag
         transition: none !important;
-        // Улучшенная производительность для drag
-        transform: translateZ(0);
+        transform: translateZ(0) rotate(2deg);
+        outline: 2px dashed rgba(102, 126, 234, 0.5);
+        outline-offset: 4px;
     }
 }
 
@@ -95,4 +85,44 @@
     .postsContainer {
         max-width: 100%;
     }
+}
+
+.dragHandle {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 4px;
+    cursor: grab;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.15s ease, background 0.1s ease;
+
+    &:hover {
+        background: rgba(102, 126, 234, 0.2);
+        opacity: 1;
+        transform: scale(1.1);
+    }
+
+    &:active {
+        cursor: grabbing;
+        background: rgba(102, 126, 234, 0.3);
+        transform: scale(0.95);
+        transition: none;
+    }
+
+    svg {
+        color: #667eea;
+        font-size: 12px;
+        transition: color 0.1s ease;
+    }
+}
+
+.postWrapper:hover .dragHandle {
+    opacity: 1;
 }

@@ -1,11 +1,11 @@
-import { type FC, useCallback } from "react";
+import { type FC, useCallback, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
 import { useDeletePost, useGetPostsList } from "../../../entity";
 import type { TPost } from "../../../entity/posts/model";
 import { Counter, Empty, PostsSkeleton, UserFilter } from "../../../feature";
-import { useAppSelector, DragAndDropWrapper, useActions } from "../../../shared";
+import { useAppSelector, DragAndDropWrapper, useActions, RoleContext } from "../../../shared";
 import { SortablePostCard } from "./sortablePostCard";
 
 import styles from "./styles.module.scss";
@@ -16,6 +16,7 @@ type IProps = {
 
 export const PostsList: FC<IProps> = ({ isFavorite = false }) => {
     const navigate = useNavigate();
+    const { isAdmin } = useContext(RoleContext);
     const { updatePostsOrder, resetPostsOrder } = useActions();
 
     const { isFetching, postsList, filterUserId, setFilterUserId } = useGetPostsList({ isFavorite });
@@ -48,7 +49,6 @@ export const PostsList: FC<IProps> = ({ isFavorite = false }) => {
         resetPostsOrder();
     }, [resetPostsOrder]);
 
-    // Мемоизируем функцию для получения ID поста
     const getPostId = useCallback((post: TPost) => post.id, []);
 
     if (isFetching) {
@@ -78,7 +78,7 @@ export const PostsList: FC<IProps> = ({ isFavorite = false }) => {
                 getItemId={getPostId}
                 onItemsReorder={handlePostsReorder}
                 className={styles.postsList}
-                sortable={!isFavorite} // Сортировка только для обычных постов
+                sortable={!isFavorite && isAdmin}
             >
                 {postsList?.map((post: TPost) => {
                     const isCurrentPostDeleting = deletingPostId === post.id;
@@ -90,7 +90,7 @@ export const PostsList: FC<IProps> = ({ isFavorite = false }) => {
                             isDeleting={isCurrentPostDeleting}
                             onPostClick={handlePostClick}
                             onUserClick={(userId: number) => setFilterUserId(userId)}
-                            sortable={!isFavorite} // Передаем флаг сортировки
+                            sortable={!isFavorite && isAdmin}
                         />
                     );
                 })}
