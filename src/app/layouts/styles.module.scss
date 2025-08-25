@@ -14,7 +14,7 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 32px 24px;
-    min-height: calc(100vh - 64px);
+    height: calc(100vh - 64px);
     display: flex;
     flex-direction: column;
 }
@@ -28,7 +28,7 @@
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     position: relative;
-    overflow: hidden;
+    overflow-y: auto;
 
     &::before {
         content: "";

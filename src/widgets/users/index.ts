@@ -1,1 +1,1 @@
-export { UserList } from "./ui";
+export { UserList, EditUser } from "./ui";

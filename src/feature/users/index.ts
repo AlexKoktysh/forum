@@ -1,1 +1,1 @@
-export { AuthorInfo, SkeletonUserList, UserCard } from "./ui";
+export { AuthorInfo, SkeletonUserList, UserCard, UserHeader, EditUserForm, UserInfo } from "./ui";

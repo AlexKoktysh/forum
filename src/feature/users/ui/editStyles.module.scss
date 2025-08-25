@@ -1,0 +1,374 @@
+@forward "@styles";
+
+.profileCard {
+    border-radius: 16px !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08) !important;
+    border: 1px solid rgba(0, 0, 0, 0.04) !important;
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+        background-size: 200% 100%;
+        animation: shimmer 3s ease-in-out infinite;
+    }
+}
+
+.profileHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 32px;
+    gap: 20px;
+}
+
+.avatarSection {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+}
+
+.profileAvatar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    border: 4px solid #fff !important;
+    flex-shrink: 0;
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3), 0 0 0 1px rgba(102, 126, 234, 0.1) !important;
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4), 0 0 0 2px rgba(102, 126, 234, 0.2) !important;
+    }
+}
+
+.profileInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+.profileTitle {
+    margin: 0 0 4px 0 !important;
+    color: #333 !important;
+    font-weight: var(--bold-weight) !important;
+    font-size: 24px !important;
+    line-height: 1.3;
+}
+
+.profileSubtitle {
+    color: #666 !important;
+    font-size: 16px;
+    display: block;
+}
+
+.editButton {
+    border-radius: 8px !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    border: none !important;
+    font-weight: var(--medium-weight) !important;
+    box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3) !important;
+    transition: all 0.3s ease !important;
+    height: 40px !important;
+    padding: 0 20px !important;
+
+    &:hover {
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 8px rgba(102, 126, 234, 0.4) !important;
+        background: linear-gradient(135deg, #7c8df0 0%, #8a5bc2 100%) !important;
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.3) !important;
+    }
+}
+
+.form {
+    .input {
+        height: 48px;
+        border-radius: 12px;
+        border: 2px solid #e8e8e8;
+        transition: all 0.3s ease;
+
+        &:hover {
+            border-color: #667eea;
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+        }
+
+        &:focus,
+        &:focus-within {
+            border-color: #667eea !important;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15) !important;
+        }
+    }
+
+    .inputIcon {
+        color: #667eea;
+        font-size: 16px;
+    }
+
+    :global(.ant-form-item-label) {
+        label {
+            color: #333 !important;
+            font-weight: var(--medium-weight);
+            font-size: 14px;
+            margin-bottom: 8px !important;
+        }
+    }
+
+    :global(.ant-form-item-explain-error) {
+        color: #ff4d4f;
+        font-size: 12px;
+        margin-top: 4px;
+    }
+
+    :global(.ant-form-item) {
+        margin-bottom: 24px;
+    }
+}
+
+.formActions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.cancelButton {
+    height: 48px;
+    border-radius: 12px;
+    border: 2px solid #e8e8e8 !important;
+    color: #666 !important;
+    font-weight: var(--medium-weight);
+    transition: all 0.3s ease;
+    padding: 0 24px;
+
+    &:hover {
+        border-color: #ff4d4f !important;
+        color: #ff4d4f !important;
+        box-shadow: 0 2px 4px rgba(255, 77, 79, 0.2);
+    }
+
+    &:focus {
+        border-color: #ff4d4f !important;
+        color: #ff4d4f !important;
+        box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.15) !important;
+    }
+}
+
+.saveButton {
+    height: 48px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    border: none !important;
+    font-weight: var(--medium-weight);
+    font-size: 16px;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    transition: all 0.3s ease;
+    padding: 0 24px;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4) !important;
+        background: linear-gradient(135deg, #5a6fd8 0%, #6b4190 100%) !important;
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    &:focus {
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3), 0 0 0 4px rgba(102, 126, 234, 0.15) !important;
+    }
+}
+
+.profileDisplay {
+    .infoSection {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        padding: 24px;
+        background: #f8f9fa;
+        border-radius: 12px;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .infoItem {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 16px;
+        background: #fff;
+        border-radius: 8px;
+        border: 1px solid rgba(0, 0, 0, 0.04);
+        transition: all 0.2s ease;
+
+        &:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+    }
+
+    .infoLabel {
+        font-size: 11px !important;
+        color: #667eea !important;
+        font-weight: var(--medium-weight);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .infoValue {
+        margin: 0 !important;
+        color: #333 !important;
+        font-weight: var(--medium-weight) !important;
+        font-size: 16px !important;
+        line-height: 1.3;
+        word-break: break-word;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .profileCard {
+        margin: 0;
+        border-radius: 16px !important;
+
+        :global(.ant-card-body) {
+            padding: 24px !important;
+        }
+    }
+
+    .profileHeader {
+        flex-direction: column;
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .avatarSection {
+        gap: 16px;
+    }
+
+    .profileAvatar {
+        width: 64px !important;
+        height: 64px !important;
+        min-width: 64px !important;
+    }
+
+    .profileTitle {
+        font-size: 20px !important;
+    }
+
+    .profileSubtitle {
+        font-size: 14px;
+    }
+
+    .editButton {
+        align-self: flex-start;
+        height: 36px !important;
+        padding: 0 16px !important;
+    }
+
+    .formActions {
+        flex-direction: column-reverse;
+        gap: 12px;
+        margin-top: 24px;
+    }
+
+    .cancelButton,
+    .saveButton {
+        height: 44px;
+        width: 100%;
+    }
+
+    .profileDisplay {
+        .infoSection {
+            grid-template-columns: 1fr;
+            padding: 24px;
+            gap: 16px;
+        }
+
+        .infoItem {
+            padding: 14px;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .profileCard {
+        margin: 0 12px;
+
+        :global(.ant-card-body) {
+            padding: 20px !important;
+        }
+    }
+
+    .profileHeader {
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .avatarSection {
+        gap: 12px;
+    }
+
+    .profileAvatar {
+        width: 56px !important;
+        height: 56px !important;
+        min-width: 56px !important;
+    }
+
+    .profileTitle {
+        font-size: 18px !important;
+    }
+
+    .profileSubtitle {
+        font-size: 13px;
+    }
+
+    .form {
+        .input {
+            height: 44px;
+        }
+
+        :global(.ant-form-item) {
+            margin-bottom: 20px;
+        }
+    }
+
+    .formActions {
+        margin-top: 20px;
+        padding-top: 20px;
+    }
+
+    .cancelButton,
+    .saveButton {
+        height: 40px;
+        font-size: 15px;
+    }
+
+    .profileDisplay {
+        .infoSection {
+            padding: 16px;
+            gap: 16px;
+        }
+
+        .infoValue {
+            font-size: 16px !important;
+        }
+    }
+}

@@ -16,12 +16,8 @@ export const UserCard: FC<UserCardProps> = ({ user }) => {
         console.log("user.id", user.id);
     };
 
-    const handleCardClick = () => {
-        console.log("user.id", user.id);
-    };
-
     return (
-        <Card className={styles.userCard} hoverable onClick={handleCardClick} bodyStyle={{ padding: "24px" }}>
+        <Card className={styles.userCard} hoverable styles={{ body: { padding: "24px" } }}>
             <div className={styles.userHeader}>
                 <Avatar size={64} className={styles.userAvatar} icon={<UserOutlined />} />
                 <div className={styles.userInfo}>

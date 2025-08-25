@@ -1,2 +1,2 @@
 export { PostsList, PostDetails } from "./posts";
-export { UserList } from "./users";
+export { UserList, EditUser } from "./users";

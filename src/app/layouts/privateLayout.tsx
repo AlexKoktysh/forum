@@ -24,7 +24,7 @@ export const PrivateLayout: FC<IProps> = ({ children }) => {
             </Header>
             <Content className={styles.content}>
                 <div className={styles.container}>
-                    <main className={styles.main}>{children}</main>
+                    <main className={location.pathname !== "/" ? styles.main : ""}>{children}</main>
                 </div>
             </Content>
         </Layout>
